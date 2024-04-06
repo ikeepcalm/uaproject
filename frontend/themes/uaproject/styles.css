@@ -1,0 +1,10 @@
+@import url('./main-layout.css');
+@import url('./views/механіки-view.css');
+@import url('./views/вікіпедія-view.css');
+@import url('./views/анкета-view.css');    html {
+      --lumo-base-color: rgb(237, 242, 255);
+      --lumo-primary-color: rgb(81, 76, 235);
+      --lumo-primary-color-50pct: rgba(81, 76, 235, 0.5);
+      --lumo-primary-color-10pct: rgba(81, 76, 235, 0.1);
+
+    }
