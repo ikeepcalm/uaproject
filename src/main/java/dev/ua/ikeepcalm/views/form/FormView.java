@@ -1,4 +1,4 @@
-package dev.ua.ikeepcalm.views.анкета;
+package dev.ua.ikeepcalm.views.form;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.dependency.Uses;
@@ -13,9 +13,9 @@ import dev.ua.ikeepcalm.views.MainLayout;
 @PageTitle("Анкета")
 @Route(value = "form", layout = MainLayout.class)
 @Uses(Icon.class)
-public class АнкетаView extends Composite<VerticalLayout> {
+public class FormView extends Composite<VerticalLayout> {
 
-    public АнкетаView() {
+    public FormView() {
         HorizontalLayout layoutRow = new HorizontalLayout();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         getContent().setWidth("100%");

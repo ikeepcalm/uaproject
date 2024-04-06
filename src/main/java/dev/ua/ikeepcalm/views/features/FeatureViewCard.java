@@ -1,4 +1,4 @@
-package dev.ua.ikeepcalm.views.механіки;
+package dev.ua.ikeepcalm.views.features;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
@@ -19,9 +19,11 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 
-public class МеханікиViewCard extends ListItem {
+import java.io.File;
 
-    public МеханікиViewCard(String text, String url) {
+public class FeatureViewCard extends ListItem {
+
+    public FeatureViewCard(String title, String text, String file, String label) {
         addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM,
                 BorderRadius.LARGE);
 
@@ -30,30 +32,25 @@ public class МеханікиViewCard extends ListItem {
                 Margin.Bottom.MEDIUM, Overflow.HIDDEN, BorderRadius.MEDIUM, Width.FULL);
         div.setHeight("160px");
 
-        Image image = new Image();
+        Image image = new Image(file, "placeholder " + file);
         image.setWidth("100%");
-        image.setSrc(url);
         image.setAlt(text);
 
         div.add(image);
 
         Span header = new Span();
         header.addClassNames(FontSize.XLARGE, FontWeight.SEMIBOLD);
-        header.setText("Title");
+        header.setText(title);
 
-        Span subtitle = new Span();
-        subtitle.addClassNames(FontSize.SMALL, TextColor.SECONDARY);
-        subtitle.setText("Card subtitle");
 
-        Paragraph description = new Paragraph(
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.");
+        Paragraph description = new Paragraph(text);
         description.addClassName(Margin.Vertical.MEDIUM);
 
         Span badge = new Span();
         badge.getElement().setAttribute("theme", "badge");
-        badge.setText("Label");
+        badge.setText(label);
 
-        add(div, header, subtitle, description, badge);
+        add(div, header, description, badge);
 
     }
 }

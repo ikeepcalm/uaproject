@@ -11,11 +11,6 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import dev.ua.ikeepcalm.views.анкета.АнкетаView;
-import dev.ua.ikeepcalm.views.вікіпедія.ВікіпедіяView;
-import dev.ua.ikeepcalm.views.головна.ГоловнаView;
-import dev.ua.ikeepcalm.views.механіки.МеханікиView;
-import dev.ua.ikeepcalm.views.правила.ПравилаView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -54,11 +49,11 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Головна", ГоловнаView.class, LineAwesomeIcon.HOME_SOLID.create()));
-        nav.addItem(new SideNavItem("Механіки", МеханікиView.class, LineAwesomeIcon.FEATHER_ALT_SOLID.create()));
-        nav.addItem(new SideNavItem("Правила", ПравилаView.class, LineAwesomeIcon.PAPERCLIP_SOLID.create()));
-        nav.addItem(new SideNavItem("Вікіпедія", ВікіпедіяView.class, LineAwesomeIcon.WIKIPEDIA_W.create()));
-        nav.addItem(new SideNavItem("Анкета", АнкетаView.class, LineAwesomeIcon.PEN_ALT_SOLID.create()));
+        nav.addItem(new SideNavItem("Головна", dev.ua.ikeepcalm.views.home.HomeView.class, LineAwesomeIcon.HOME_SOLID.create()));
+        nav.addItem(new SideNavItem("Механіки", dev.ua.ikeepcalm.views.features.FeaturesView.class, LineAwesomeIcon.FEATHER_ALT_SOLID.create()));
+        nav.addItem(new SideNavItem("Правила", dev.ua.ikeepcalm.views.rules.RulesView.class, LineAwesomeIcon.PAPERCLIP_SOLID.create()));
+        nav.addItem(new SideNavItem("Вікіпедія", dev.ua.ikeepcalm.views.wiki.WikiView.class, LineAwesomeIcon.WIKIPEDIA_W.create()));
+        nav.addItem(new SideNavItem("Анкета", dev.ua.ikeepcalm.views.form.FormView.class, LineAwesomeIcon.PEN_ALT_SOLID.create()));
 
         return nav;
     }
