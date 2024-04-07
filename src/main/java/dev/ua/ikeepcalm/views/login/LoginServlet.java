@@ -59,6 +59,7 @@ public class LoginServlet extends HttpServlet {
                         discordUserService.create(newUser);
                         String redirectUrl = "/form?" + "key=" + newUser.getDiscordId() + "&username=" + userInfo.get(1);
                         response.sendRedirect(request.getContextPath() + redirectUrl);
+
                     } else {
                         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         response.getWriter().println("Failed to retrieve user info!");

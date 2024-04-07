@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class DiscordUser extends PersistentUser {
@@ -37,6 +36,8 @@ public class DiscordUser extends PersistentUser {
     private String memory;
     @Column
     private boolean alreadyTried;
+    @Column
+    private boolean wasApproved;
 
     public DiscordUser(String username, String discordId) {
         this.username = username;
@@ -45,6 +46,14 @@ public class DiscordUser extends PersistentUser {
 
     public DiscordUser() {
 
+    }
+
+    public boolean isWasApproved() {
+        return wasApproved;
+    }
+
+    public void setWasApproved(boolean wasApproved) {
+        this.wasApproved = wasApproved;
     }
 
     public String getUsername() {

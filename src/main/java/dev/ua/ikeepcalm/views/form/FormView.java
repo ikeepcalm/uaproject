@@ -22,11 +22,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import dev.ua.ikeepcalm.utils.ResponseUtil;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.views.MainLayout;
 import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import dev.ua.ikeepcalm.views.form.source.PlayerType;
+import net.dv8tion.jda.api.JDA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +41,12 @@ import java.util.Optional;
 public class FormView extends Composite<VerticalLayout> implements BeforeEnterObserver {
 
     private final DiscordUserService service;
+    private final JDA jda;
     private DiscordUser currentPerson;
 
-    public FormView(DiscordUserService service) {
+    public FormView(DiscordUserService service, JDA jda) {
         this.service = service;
+        this.jda = jda;
 
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
@@ -204,6 +208,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 UI.getCurrent().navigate("");
             });
             dialog.open();
+            ResponseUtil.sendNewForm(currentPerson, jda);
         });
 
         layoutRow.add(buttonPrimary);
