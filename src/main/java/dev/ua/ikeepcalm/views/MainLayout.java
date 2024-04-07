@@ -13,12 +13,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
-public class MainLayout extends AppLayout {
 
+public class MainLayout extends AppLayout {
     private H2 viewTitle;
+
 
     public MainLayout() {
         setPrimarySection(Section.DRAWER);
@@ -37,7 +35,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        H1 appName = new H1("Uaproject");
+        H1 appName = new H1("UAPROJECT");
         appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
         Header header = new Header(appName);
 

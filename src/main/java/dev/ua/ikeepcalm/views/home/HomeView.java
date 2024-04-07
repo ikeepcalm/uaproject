@@ -14,7 +14,7 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import dev.ua.ikeepcalm.views.MainLayout;
 
-@PageTitle("Uaproject")
+@PageTitle("Uaproject - Український Minecraft сервер")
 @Route(value = "home", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 public class HomeView extends VerticalLayout {
