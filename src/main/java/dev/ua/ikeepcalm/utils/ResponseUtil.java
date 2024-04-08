@@ -1,6 +1,7 @@
 package dev.ua.ikeepcalm.utils;
 
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
+import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -81,14 +82,26 @@ public class ResponseUtil {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("Нова анкета від - " + user.getUsername());
         embed.setColor(Color.GRAY);
-        embed.addField("Ігровий нікнейм", user.getNickname(), true);
-        embed.addField("Дата народження + вік", user.getBirthday() + " " + getYearsDifference(LocalDate.now(), user.getBirthday()), true);
-        embed.addField("Ігровий лаунчер", user.getGameLauncher().getLauncher(), true);
-        embed.addField("Тип гравця", user.getTypeOfPlayer().getType(), true);
+        embed.addField("Нікнейм", user.getNickname(), true);
+        long age = getYearsDifference(LocalDate.now(), user.getBirthday());
+        if (age > 18) {
+            embed.addField("Вік (Рекомендовано)", "Гравцю наразі " + age + "роки(ів)", true);
+        } else {
+            embed.addField("Вік (Надто молодий)", "Гравцю наразі " + age + "роки(ів)", true);
+        }
+
+        LauncherType launcherType = user.getGameLauncher();
+        if (launcherType == LauncherType.TLAUNCHER || launcherType == LauncherType.TLAUNCHER_LEGACY || launcherType == LauncherType.KLAUNCHER) {
+            embed.addField("Лаунчер (Російський)", launcherType.getLauncher(), true);
+        } else {
+            embed.addField("Лаунчер (Нормальний)", launcherType.getLauncher(), true);
+        }
+
+        embed.addField("Тип гравця", "Гравець найбільше асоціює себе із таким типом - " + user.getTypeOfPlayer().getType(), true);
         embed.addField("Звідки дізнався про нас", user.getAdvised(), true);
-        embed.addField("Хоббі у вільний час", user.getHobbies(), true);
-        embed.addField("Досвід гри на серверах", user.getExperience(), true);
-        embed.addField("Дуже складна задачка", user.getTask(), true);
+        embed.addField("Чим займається у вільний час", user.getHobbies(), true);
+        embed.addField("Досвід гри на інших серверах", user.getExperience(), true);
+        embed.addField("Задачка зі школи (75 хвилин)", user.getTask(), true);
         embed.addField("Конфліктна ситуація", user.getConflict(), true);
         embed.addField("Спогад із дитинства", user.getMemory(), true);
         embed.addField("Безпосередньо користувач", "<@" + user.getDiscordId() + ">", true);

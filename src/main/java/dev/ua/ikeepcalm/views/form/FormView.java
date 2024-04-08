@@ -41,12 +41,10 @@ import java.util.Optional;
 public class FormView extends Composite<VerticalLayout> implements BeforeEnterObserver {
 
     private final DiscordUserService service;
-    private final JDA jda;
     private DiscordUser currentPerson;
 
     public FormView(DiscordUserService service, JDA jda) {
         this.service = service;
-        this.jda = jda;
 
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
@@ -227,7 +225,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         });
         dialog.addCancelListener(event -> {
             dialog.close();
-            UI.getCurrent().navigate("/form");
+            UI.getCurrent().navigate("");
         });
         dialog.open();
     }
@@ -287,8 +285,9 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         launcherItems.add(new LauncherItem(LauncherType.TLAUNCHER, LauncherType.TLAUNCHER.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.TLAUNCHER_LEGACY, LauncherType.TLAUNCHER_LEGACY.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.MINECRAFT_LAUNCHER, LauncherType.MINECRAFT_LAUNCHER.getLauncher()));
-        launcherItems.add(new LauncherItem(LauncherType.BEDROCK, LauncherType.BEDROCK.getLauncher()));
+        launcherItems.add(new LauncherItem(LauncherType.BEDROCK_LAUNCHER, LauncherType.BEDROCK_LAUNCHER.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.PRISM_LAUNCHER, LauncherType.PRISM_LAUNCHER.getLauncher()));
+        launcherItems.add(new LauncherItem(LauncherType.AT_LAUNCHER, LauncherType.AT_LAUNCHER.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.POLYMC, LauncherType.POLYMC.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.POLLYMC, LauncherType.POLLYMC.getLauncher()));
         launcherItems.add(new LauncherItem(LauncherType.MULTI_MC, LauncherType.MULTI_MC.getLauncher()));

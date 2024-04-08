@@ -2,6 +2,7 @@ package dev.ua.ikeepcalm.views.login;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
+import com.vaadin.flow.component.page.WebStorage;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import io.mokulu.discord.oauth.DiscordOAuth;

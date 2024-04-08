@@ -1,75 +1,100 @@
 package dev.ua.ikeepcalm.views;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.orderedlayout.Scroller;
-import com.vaadin.flow.component.sidenav.SideNav;
-import com.vaadin.flow.component.sidenav.SideNavItem;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 
 public class MainLayout extends AppLayout {
-    private H2 viewTitle;
 
+    public static class MenuItemInfo extends ListItem {
+
+        private final Class<? extends Component> view;
+
+        public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
+            this.view = view;
+            RouterLink link = new RouterLink();
+            link.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.XSMALL, LumoUtility.Height.MEDIUM, LumoUtility.AlignItems.CENTER, LumoUtility.Padding.Horizontal.SMALL,
+                    LumoUtility.TextColor.BODY);
+            link.setRoute(view);
+
+            Span text = new Span(menuTitle);
+            text.addClassNames(LumoUtility.FontWeight.MEDIUM, LumoUtility.FontSize.MEDIUM, LumoUtility.Whitespace.NOWRAP);
+
+            if (icon != null) {
+                link.add(icon);
+            }
+            link.add(text);
+            add(link);
+        }
+
+        public Class<?> getView() {
+            return view;
+        }
+
+    }
 
     public MainLayout() {
-        setPrimarySection(Section.DRAWER);
-        addDrawerContent();
-        addHeaderContent();
+        addToNavbar(createHeaderContent());
+        setDrawerOpened(false);
     }
 
-    private void addHeaderContent() {
-        DrawerToggle toggle = new DrawerToggle();
-        toggle.setAriaLabel("Menu toggle");
+    private Component createHeaderContent() {
+        Header header = new Header();
+        header.addClassNames(LumoUtility.BoxSizing.BORDER, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN, LumoUtility.Width.FULL);
 
-        viewTitle = new H2();
-        viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
+        Div layout = new Div();
+        layout.addClassNames(LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER, LumoUtility.Padding.Horizontal.LARGE, LumoUtility.JustifyContent.CENTER);
 
-        addToNavbar(true, toggle, viewTitle);
+        Nav nav = new Nav();
+        nav.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Overflow.AUTO, LumoUtility.Padding.Horizontal.MEDIUM, LumoUtility.Padding.Vertical.XSMALL, LumoUtility.JustifyContent.CENTER);
+
+        UnorderedList list = new UnorderedList();
+        list.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.SMALL, LumoUtility.ListStyleType.NONE, LumoUtility.Margin.NONE, LumoUtility.Padding.NONE);
+        nav.add(list);
+
+        for (ListItem listItem : createMenuItems()) {
+            list.add(listItem);
+        }
+
+        header.add(layout, nav);
+        return header;
     }
 
-    private void addDrawerContent() {
-        H1 appName = new H1("UAPROJECT");
-        appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
-        Header header = new Header(appName);
-
-        Scroller scroller = new Scroller(createNavigation());
-
-        addToDrawer(header, scroller, createFooter());
+    private ListItem[] createMenuItems() {
+        return new ListItem[]{
+                new MenuItemInfo("Головна", LineAwesomeIcon.HOME_SOLID.create(), dev.ua.ikeepcalm.views.home.HomeView.class),
+                new MenuItemInfo("Механіки", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
+                new MenuItemInfo("Правила", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
+                new MenuItemInfo("Вікіпедія", LineAwesomeIcon.WIKIPEDIA_W.create(), dev.ua.ikeepcalm.views.wiki.WikiView.class),
+                new MenuItemInfo("Анкета", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
+                new ExternalMenuItemInfo("Діскорд ↝", LineAwesomeIcon.DISCORD.create(), "https://discord.gg/nyAMvRru7x"),
+                new ExternalMenuItemInfo("Мапа ↝", LineAwesomeIcon.MAP.create(), "https://map.uaproject.xyz/"),
+                new ExternalMenuItemInfo("Донат ↝", LineAwesomeIcon.MONEY_BILL_SOLID.create(), "https://donatello.to/fyzzzen/")
+        };
     }
 
-    private SideNav createNavigation() {
-        SideNav nav = new SideNav();
+    private static class ExternalMenuItemInfo extends ListItem {
 
-        nav.addItem(new SideNavItem("Головна", dev.ua.ikeepcalm.views.home.HomeView.class, LineAwesomeIcon.HOME_SOLID.create()));
-        nav.addItem(new SideNavItem("Механіки", dev.ua.ikeepcalm.views.features.FeaturesView.class, LineAwesomeIcon.FEATHER_ALT_SOLID.create()));
-        nav.addItem(new SideNavItem("Правила", dev.ua.ikeepcalm.views.rules.RulesView.class, LineAwesomeIcon.PAPERCLIP_SOLID.create()));
-        nav.addItem(new SideNavItem("Вікіпедія", dev.ua.ikeepcalm.views.wiki.WikiView.class, LineAwesomeIcon.WIKIPEDIA_W.create()));
-        nav.addItem(new SideNavItem("Анкета", dev.ua.ikeepcalm.views.form.FormView.class, LineAwesomeIcon.PEN_ALT_SOLID.create()));
+        public ExternalMenuItemInfo(String menuTitle, Component icon, String url) {
+            Anchor link = new Anchor();
+            link.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.XSMALL, LumoUtility.Height.MEDIUM, LumoUtility.AlignItems.CENTER, LumoUtility.Padding.Horizontal.SMALL,
+                    LumoUtility.TextColor.BODY);
+            link.setHref(url);
+            link.setTarget("_blank");
 
-        return nav;
+            Span text = new Span(menuTitle);
+            text.addClassNames(LumoUtility.FontWeight.MEDIUM, LumoUtility.FontSize.MEDIUM, LumoUtility.Whitespace.NOWRAP);
+
+            if (icon != null) {
+                link.add(icon);
+            }
+            link.add(text);
+            add(link);
+        }
     }
 
-    private Footer createFooter() {
-        Footer layout = new Footer();
-
-        return layout;
-    }
-
-    @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
-    }
-
-    private String getCurrentPageTitle() {
-        PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
-        return title == null ? "" : title.value();
-    }
 }
