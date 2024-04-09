@@ -79,7 +79,6 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
 
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
-        Button buttonSecondary = new Button();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
@@ -117,8 +116,6 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         buttonPrimary.setText("Зберегти і відправити");
         buttonPrimary.setWidth("min-content");
         buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonSecondary.setText("Відмінити і очистити");
-        buttonSecondary.setWidth("min-content");
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
         layoutColumn2.add(formLayout2Col);
@@ -210,18 +207,17 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         });
 
         layoutRow.add(buttonPrimary);
-        layoutRow.add(buttonSecondary);
     }
 
     private void getDiscordUser() {
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setHeader("Увійдіть за допомогою Discord");
-        dialog.setText("Щоб продовжити, увійдіть за допомогою вашого акаунту Discord. Це потрібно, щоб ідентифікувати вас на сервері, а також сповістити про результат перевірки анкети!");
+        dialog.setText("Щоб продовжити, увійдіть за допомогою вашого акаунту Discord. Це потрібно, щоб ідентифікувати вас на сервері, а також сповістити про результат перевірки анкети! Щоб отримати повідомлення, ПП мають бути відкритими!");
 
         dialog.setConfirmText("Увійти");
         dialog.addConfirmListener(event -> {
             dialog.close();
-            UI.getCurrent().getPage().setLocation("https://discord.com/oauth2/authorize?client_id=1226236763975188550&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin%2Fcallback&scope=identify");
+            UI.getCurrent().getPage().setLocation("https://discord.com/oauth2/authorize?client_id=1226236763975188550&response_type=code&redirect_uri=https%3A%2F%2Fuaproject-reborn.xyz%2Flogin%2Fcallback&scope=identify");
         });
         dialog.addCancelListener(event -> {
             dialog.close();
@@ -242,19 +238,35 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         } else {
             currentPerson = service.findByDiscordId(key.get()).get();
             if (currentPerson.isAlreadyTried()) {
-                ConfirmDialog dialog = new ConfirmDialog();
-                dialog.setHeader("Ви вже заповнили анкету!");
-                dialog.setText("Ваша анкета вже збережена. Ми зв'яжемося з вами найближчим часом! Також, перевірте, чи ваші ПП відкриті для нашого бота.");
-                dialog.setConfirmText("Закрити");
-                dialog.addConfirmListener(e -> {
-                    dialog.close();
-                    UI.getCurrent().navigate("");
-                });
-                dialog.addCancelListener(event -> {
-                    dialog.close();
-                    UI.getCurrent().navigate("/form");
-                });
-                dialog.open();
+                if (currentPerson.isWasApproved()){
+                    ConfirmDialog dialog = new ConfirmDialog();
+                    dialog.setHeader("Анкету було прийнято!");
+                    dialog.setText("З радістю повідомляю, що ваша анкета була прийнята! Доступ гравця було надано на вказаний у анкеті нікнейм. Якщо у вас виникнуть проблеми, звертайтеся до адміністрації сервера. Дякуємо за участь!");
+                    dialog.setConfirmText("Закрити");
+                    dialog.addConfirmListener(e -> {
+                        dialog.close();
+                        UI.getCurrent().navigate("");
+                    });
+                    dialog.addCancelListener(event -> {
+                        dialog.close();
+                        UI.getCurrent().navigate("/form");
+                    });
+                    dialog.open();
+                } else {
+                    ConfirmDialog dialog = new ConfirmDialog();
+                    dialog.setHeader("Ви вже заповнили анкету!");
+                    dialog.setText("Ваша анкета вже збережена. Ми зв'яжемося з вами найближчим часом! Також, перевірте, чи ваші ПП відкриті для нашого бота");
+                    dialog.setConfirmText("Закрити");
+                    dialog.addConfirmListener(e -> {
+                        dialog.close();
+                        UI.getCurrent().navigate("");
+                    });
+                    dialog.addCancelListener(event -> {
+                        dialog.close();
+                        UI.getCurrent().navigate("/form");
+                    });
+                    dialog.open();
+                }
             } else {
                 username.ifPresent(s -> currentPerson.setUsername(s));
                 service.update(currentPerson);

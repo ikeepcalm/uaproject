@@ -34,7 +34,7 @@ public class HomeView extends VerticalLayout {
         Div content = new Div();
         Div imageTextContainer = new Div();
         imageTextContainer.addClassName("background-overlay-container");
-        Image image = new Image("images/background.jpg", "Background image");
+        Image image = new Image("images/background.webp", "Background image");
         image.addClassName("background-overlay");
         imageTextContainer.add(image);
 

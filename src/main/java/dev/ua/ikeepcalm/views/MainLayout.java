@@ -71,9 +71,9 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Правила", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
                 new MenuItemInfo("Вікіпедія", LineAwesomeIcon.WIKIPEDIA_W.create(), dev.ua.ikeepcalm.views.wiki.WikiView.class),
                 new MenuItemInfo("Анкета", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
-                new ExternalMenuItemInfo("Діскорд ↝", LineAwesomeIcon.DISCORD.create(), "https://discord.gg/nyAMvRru7x"),
-                new ExternalMenuItemInfo("Мапа ↝", LineAwesomeIcon.MAP.create(), "https://map.uaproject.xyz/"),
-                new ExternalMenuItemInfo("Донат ↝", LineAwesomeIcon.MONEY_BILL_SOLID.create(), "https://donatello.to/fyzzzen/")
+                new ExternalMenuItemInfo("↝", LineAwesomeIcon.DISCORD.create(), "https://discord.gg/nyAMvRru7x"),
+                new ExternalMenuItemInfo("↝", LineAwesomeIcon.MAP.create(), "https://map.uaproject.xyz/"),
+
         };
     }
 

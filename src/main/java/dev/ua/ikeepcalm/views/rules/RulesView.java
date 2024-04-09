@@ -3,6 +3,7 @@ package dev.ua.ikeepcalm.views.rules;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -13,10 +14,11 @@ import dev.ua.ikeepcalm.views.MainLayout;
 @Route(value = "rules", layout = MainLayout.class)
 public class RulesView extends VerticalLayout {
 
+    private final VerticalLayout contentLayout;
 
-    private class Rule {
-        private String number;
-        private String description;
+    private static class Rule {
+        private final String number;
+        private final String description;
 
         public Rule(String number, String description) {
             this.number = number;
@@ -34,9 +36,14 @@ public class RulesView extends VerticalLayout {
 
     public RulesView() {
 
+        Scroller scroller = new Scroller();
+        scroller.getStyle().set("overflow-y", "auto");
+        scroller.getStyle().set("max-height", "100vh");
+        contentLayout = new VerticalLayout();
+
         H2 header = new H2("Головні правила сервера");
         header.addClassNames(Margin.AUTO, Margin.Bottom.MEDIUM);
-        add(header);
+        contentLayout.add(header);
 
 
         addRule(new Rule("1.1", "Гріферство, грабіжництво, псування будівель і ландшафту"));
@@ -50,13 +57,15 @@ public class RulesView extends VerticalLayout {
         addRule(new Rule("1.9", "Російська мова у голосових каналах проти згоди інших учасників"));
         addRule(new Rule("1.10", "Заперечення злочинів і збройної агресії РФ проти України"));
 
-        addNote("Незнання правил не звільняє від відповідальності за їх порушення. У випадках, коли не вдається чітко визначити пункт порушення, за адміністрацією залишається право обрати запобіжний захід без обґрунтування своїх дій!");
+        addRule(new Rule("", "Незнання правил не звільняє від відповідальності за їх порушення. У випадках, коли не вдається чітко визначити пункт порушення, за адміністрацією залишається право обрати запобіжний захід без обґрунтування своїх дій!"));
 
         setHeightFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("overflow-y", "auto");
         getStyle().set("text-align", "center");
+        scroller.setContent(contentLayout);
+        add(scroller);
     }
 
     private void addRule(Rule... rules) {
@@ -68,16 +77,8 @@ public class RulesView extends VerticalLayout {
             ruleBlock.add(ruleParagraph);
         }
         ruleBlock.setWidth("90%");
-        add(ruleBlock);
+        contentLayout.add(ruleBlock);
     }
 
-    private void addNote(String note) {
-        Div noteBlock = new Div();
-        noteBlock.addClassNames("note-block");
-        Paragraph noteParagraph = new Paragraph(note);
-        noteBlock.add(noteParagraph);
-        noteBlock.setWidth("90%");
-        add(noteBlock);
-    }
 
 }

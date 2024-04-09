@@ -1,6 +1,7 @@
 package dev.ua.ikeepcalm.views.wiki;
 
 public class WikiCard {
+
     private final String question;
     private final String answer;
 
