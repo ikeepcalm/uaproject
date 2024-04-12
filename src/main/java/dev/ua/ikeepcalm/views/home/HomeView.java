@@ -46,18 +46,34 @@ public class HomeView extends VerticalLayout {
         Image logo = new Image("images/uaproject-pfp.png", "Logo");
         logo.getStyle().set("width", "100px");
         header.getStyle().set("width", "100%");
-        H1 h1 = new H1("Uaproject Reborn");
-        h1.addClassName(LumoUtility.Margin.Bottom.NONE);
-        h1.addClassName(LumoUtility.TextColor.SECONDARY);
-        H3 h2 = new H3("Український Minecraft сервер");
-        h2.addClassName(LumoUtility.TextColor.TERTIARY);
-        h2.addClassName(LumoUtility.Margin.Top.NONE);
-        header.add(logo);
-        header.add(h1);
-        header.add(h2);
-        contentLayout.add(header);
+        H1 title = new H1("Uaproject Reborn");
+        title.addClassName(LumoUtility.Margin.Bottom.NONE);
+        title.addClassName(LumoUtility.TextColor.SECONDARY);
+        H3 desc = new H3("Український Minecraft сервер");
+        desc.addClassName(LumoUtility.TextColor.TERTIARY);
+        desc.addClassName(LumoUtility.Margin.Top.NONE);
+        H5 more = new H5("Скоро тут буде купа тексту, а поки...");
+        more.addClassName(LumoUtility.TextColor.TERTIARY);
+        more.addClassName(LumoUtility.Margin.Top.XLARGE);
 
+        Footer footer = new Footer();
+        H6 copyright = new H6("© 2024 uaproject / ikeepcalm");
+        copyright.addClassName(LumoUtility.TextColor.TERTIARY);
+        footer.add(copyright);
+        footer.addClassNames(LumoUtility.Display.FLEX, LumoUtility.JustifyContent.CENTER);
+        footer.getStyle().set("padding", "20px");
+        footer.getStyle().set("width", "100%");
+
+        header.add(logo);
+        header.add(title);
+        header.add(desc);
+        header.add(more);
+        header.add(footer);
+        contentLayout.add(header);
         scroller.setContent(contentLayout);
         add(scroller);
+
+
+
     }
 }

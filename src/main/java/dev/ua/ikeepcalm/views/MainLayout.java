@@ -1,6 +1,7 @@
 package dev.ua.ikeepcalm.views;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.router.RouterLink;
@@ -38,7 +39,7 @@ public class MainLayout extends AppLayout {
     }
 
     public MainLayout() {
-        addToNavbar(createHeaderContent());
+        addToNavbar(true, createHeaderContent());
         setDrawerOpened(false);
     }
 
@@ -53,16 +54,27 @@ public class MainLayout extends AppLayout {
         nav.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Overflow.AUTO, LumoUtility.Padding.Horizontal.MEDIUM, LumoUtility.Padding.Vertical.XSMALL, LumoUtility.JustifyContent.CENTER);
 
         UnorderedList list = new UnorderedList();
-        list.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.SMALL, LumoUtility.ListStyleType.NONE, LumoUtility.Margin.NONE, LumoUtility.Padding.NONE);
+
         nav.add(list);
 
-        for (ListItem listItem : createMenuItems()) {
-            list.add(listItem);
-        }
+        UI.getCurrent().getPage().retrieveExtendedClientDetails(details -> {
+            if (details.getScreenWidth() < 1200) {
+                for (ListItem listItem : createMenuIcons()) {
+                    list.add(listItem);
+                    list.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.XSMALL, LumoUtility.ListStyleType.NONE, LumoUtility.Margin.NONE, LumoUtility.Padding.NONE);
+                }
+            } else {
+                for (ListItem listItem : createMenuItems()) {
+                    list.add(listItem);
+                    list.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.SMALL, LumoUtility.ListStyleType.NONE, LumoUtility.Margin.NONE, LumoUtility.Padding.NONE);
+                }
+            }
+        });
 
         header.add(layout, nav);
         return header;
     }
+
 
     private ListItem[] createMenuItems() {
         return new ListItem[]{
@@ -70,10 +82,21 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Механіки", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
                 new MenuItemInfo("Правила", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
                 new MenuItemInfo("Вікіпедія", LineAwesomeIcon.WIKIPEDIA_W.create(), dev.ua.ikeepcalm.views.wiki.WikiView.class),
+                new MenuItemInfo("Магазин", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
                 new MenuItemInfo("Анкета", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
                 new ExternalMenuItemInfo("↝", LineAwesomeIcon.DISCORD.create(), "https://discord.gg/nyAMvRru7x"),
                 new ExternalMenuItemInfo("↝", LineAwesomeIcon.MAP.create(), "https://map.uaproject.xyz/"),
+        };
+    }
 
+    private ListItem[] createMenuIcons() {
+        return new ListItem[]{
+                new MenuItemInfo("", LineAwesomeIcon.HOME_SOLID.create(), dev.ua.ikeepcalm.views.home.HomeView.class),
+                new MenuItemInfo("", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
+                new MenuItemInfo("", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
+                new MenuItemInfo("", LineAwesomeIcon.WIKIPEDIA_W.create(), dev.ua.ikeepcalm.views.wiki.WikiView.class),
+                new MenuItemInfo("", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
+                new MenuItemInfo("", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
         };
     }
 

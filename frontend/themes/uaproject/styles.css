@@ -4,6 +4,7 @@
 @import url('./views/features-view.css');
 @import url('./views/wiki-view.css');
 @import url('views/home-view.css');
+@import url('./views/shop-view.css');
 @import url('./views/form-view.css');    html {
       --lumo-base-color: rgb(237, 242, 255);
       --lumo-primary-color: rgb(81, 76, 235);

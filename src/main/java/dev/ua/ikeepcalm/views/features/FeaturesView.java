@@ -8,7 +8,6 @@ import com.vaadin.flow.component.html.OrderedList;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
@@ -33,7 +32,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         constructUI();
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Кастомна генерація",
                         "Чесно кажучи, ванільна генерація майнкрафту вже набридла. Ми вирішили це виправити, додавши кастомні структури і покращивши генерацію світу!",
                         "images/generation.jpg",
@@ -41,7 +40,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
                 );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Незвичний чат",
                         "Як писати в глобальний чат? - Доволі часте запитання на всіх серверах, але не у нас. У нас просто немає глобального чату, а отже, щоб увесь світ дізнався про ваші подвиги, треба постаратися!",
                         "images/chat.jpg",
@@ -50,7 +49,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
 
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Підтримка Бедроку",
                         "Ми підтримуємо версію гри для мобільних пристроїв, що дозволяє грати на сервері з будь-якого пристрою. Звісно, нащо так робити не зрозуміло, але у нас - можна!",
                         "images/bedrock.jpg",
@@ -58,7 +57,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Містичний світ",
                         "Вірус, який тероризував гравців у четвертому сезоні, щось пробудив у недрах світу. Звичні простори розширюються, а вирують нові сили. Чи зможете ви зупинити цю загрозу?",
                         "images/mystical.jpg",
@@ -66,7 +65,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Режим гостя",
                         "Необхідність заповнювати анкету або покупати допуск на сервер, щоб вперше зайти, насправді, дуже дратує. Саме тому ми додали режим гостя, який дозволяє вам зайти на сервер навіть зараз!",
                         "images/spectator.jpg",
@@ -74,7 +73,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Програма для авторів контенту",
                         "Ми підтримуємо авторів контенту, які хочуть знімати відео або проводити стріми на нашому сервері. Для них ми розробили спеціальну програму, яка дозволяє отримати доступ до унікальних можливостей! Наприклад, можливість розіграти допуски на сервер серед глядачів!",
                         "images/spectator.jpg",
@@ -82,7 +81,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Внутрішньоігрова поліція",
                         "Система покарань 'покараний-модератор-бан' хоч і працює, але зовсім нецікаво. Тому на нашому сервері діє внутрішньоігрова поліція, яка відповідає за порядок на сервері. Це дозволяє гравцям самим вирішувати конфлікти і вирішувати питання порушення правил!",
                         "images/spectator.jpg",
@@ -90,7 +89,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Цікава економіка",
                         "Очікували звичну консольну економіку у нас? Тут ви й помилилися! Ще одна особливість нашого серверу - унікальна економічна система. Наприклад, гравець може зробити свій власний гаманець, який треба буде обов'язково носити із собою, щоб мати доступ до своїх багатств!",
                         "images/spectator.jpg",
@@ -98,7 +97,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Войс-чат & Емоції",
                         "Ми підтримуємо голосовий чат, який дозволяє вам спілкуватися з іншими гравцями без обмежень. Також у нас є власна система емоцій, яка дозволяє вам виразити свої почуття у грі! Звісно, якщо ви захочете, ніхто нікого не змушує. Поки.",
                         "images/spectator.jpg",
@@ -107,7 +106,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
 
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Цікаві івенти",
                         "Якщо вам набридло збирати ресурси і будувати, ми готові вас розважити. Щотижня ми проводимо цікаві івенти, які дозволяють вам відпочити від рутини і отримати приємні бонуси!",
                         "images/discord.jpg",
@@ -115,7 +114,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Рівнева система",
                         "Якщо вам більше по душі спілкуватися з гравцями, ніж займатися будівництвом, ми маємо для вас щось особливе. На нашому сервері діє рівнева система, яка дозволяє вам отримувати бонуси за активність і взаємодію з іншими гравцями!",
                         "images/discord.jpg",
@@ -123,7 +122,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         );
 
         imageContainer.add(
-                new FeatureViewCard(
+                new FeatureCard(
                         "Спойлери, новини і анонси",
                         "Дискорд проєкту - основне місце взаємодії адміністрації з гравцями. Тут ми публікуємо спойлери, новини і анонси, які дозволяють вам бути в курсі всіх подій на сервері!",
                         "images/discord.jpg",

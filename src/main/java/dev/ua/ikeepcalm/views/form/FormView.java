@@ -215,6 +215,9 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         dialog.setText("Щоб продовжити, увійдіть за допомогою вашого акаунту Discord. Це потрібно, щоб ідентифікувати вас на сервері, а також сповістити про результат перевірки анкети! Щоб отримати повідомлення, ПП мають бути відкритими!");
 
         dialog.setConfirmText("Увійти");
+        dialog.setCancelText("Пізніше");
+        dialog.setCancelable(true);
+
         dialog.addConfirmListener(event -> {
             dialog.close();
             UI.getCurrent().getPage().setLocation("https://discord.com/oauth2/authorize?client_id=1226236763975188550&response_type=code&redirect_uri=https%3A%2F%2Fuaproject-reborn.xyz%2Flogin%2Fcallback&scope=identify");
