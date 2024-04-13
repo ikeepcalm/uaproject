@@ -4,21 +4,39 @@ import dev.ua.ikeepcalm.bot.EventDispatcher;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
+import io.graversen.minecraft.rcon.MinecraftRcon;
+import io.graversen.minecraft.rcon.commands.WhiteListCommand;
+import io.graversen.minecraft.rcon.service.ConnectOptions;
+import io.graversen.minecraft.rcon.service.MinecraftRconService;
+import io.graversen.minecraft.rcon.service.RconDetails;
+import io.graversen.minecraft.rcon.util.Target;
+import io.graversen.minecraft.rcon.util.WhiteListModes;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.time.Duration;
 import java.util.Optional;
 
 @Component
 public class ResponseListener extends ListenerAdapter implements EventDispatcher {
 
     private final DiscordUserService discordUserService;
+
+    @Value("${minecraft.rcon}")
+    private String rconUrl;
+
+    @Value("${minecraft.port}")
+    private Integer rconPort;
+
+    @Value("${minecraft.password}")
+    private String rconPassword;
 
     public ResponseListener(DiscordUserService discordUserService) {
         this.discordUserService = discordUserService;
@@ -75,7 +93,15 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
 
             ResponseUtil.sendSuccessMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
 
-            // Add to the graylist
+            final MinecraftRconService minecraftRconService = new MinecraftRconService(
+                    new RconDetails(rconUrl, rconPort, rconPassword),
+                    ConnectOptions.defaults()
+            );
+
+            minecraftRconService.connectBlocking(Duration.ofSeconds(5));
+            MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
+            WhiteListCommand whiteListCommand = new WhiteListCommand(Target.player(discordUser.getNickname()), WhiteListModes.ADD);
+            minecraftRcon.sendAsync(whiteListCommand);
 
         } else if (componentId.split("-")[0].equals("declined")) {
             System.out.println("Declined");
