@@ -29,6 +29,8 @@ import dev.ua.ikeepcalm.views.MainLayout;
 import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import dev.ua.ikeepcalm.views.form.source.PlayerType;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,11 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
 
     private final DiscordUserService service;
     private DiscordUser currentPerson;
+    private JDA jda;
 
     public FormView(DiscordUserService service, JDA jda) {
         this.service = service;
+        this.jda = jda;
 
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
@@ -243,6 +247,31 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 return;
             }
             currentPerson = service.findByDiscordId(key.get()).get();
+
+            Guild guild = jda.getGuildById(1221552838807654450L);
+            if (guild == null) {
+                return;
+            }
+
+            Member member = guild.retrieveMemberById(currentPerson.getDiscordId()).complete();
+            if (member == null) {
+                ConfirmDialog dialog = new ConfirmDialog();
+                dialog.setHeader("Ваш акаунт не знайдено!");
+                dialog.setText("Для того, щоб подати анкету, вам потрібно бути у нашому дискорд сервері. Перейдіть за посиланням, щоб приєднатися до нас!");
+                dialog.setCancelText("Закрити");
+                dialog.setConfirmText("Приєднатися");
+                dialog.addConfirmListener(e -> {
+                    dialog.close();
+                    UI.getCurrent().navigate("https://discord.gg/nyAMvRru7x");
+                });
+                dialog.addCancelListener(event -> {
+                    dialog.close();
+                    UI.getCurrent().navigate("");
+                });
+                dialog.open();
+                return;
+            }
+
             if (currentPerson.isAlreadyTried()) {
                 if (currentPerson.isWasApproved()){
                     ConfirmDialog dialog = new ConfirmDialog();

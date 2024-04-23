@@ -8,35 +8,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-
 public class MainLayout extends AppLayout {
-
-    public static class MenuItemInfo extends ListItem {
-
-        private final Class<? extends Component> view;
-
-        public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
-            this.view = view;
-            RouterLink link = new RouterLink();
-            link.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.XSMALL, LumoUtility.Height.MEDIUM, LumoUtility.AlignItems.CENTER, LumoUtility.Padding.Horizontal.SMALL,
-                    LumoUtility.TextColor.BODY);
-            link.setRoute(view);
-
-            Span text = new Span(menuTitle);
-            text.addClassNames(LumoUtility.FontWeight.MEDIUM, LumoUtility.FontSize.MEDIUM, LumoUtility.Whitespace.NOWRAP);
-
-            if (icon != null) {
-                link.add(icon);
-            }
-            link.add(text);
-            add(link);
-        }
-
-        public Class<?> getView() {
-            return view;
-        }
-
-    }
 
     public MainLayout() {
         addToNavbar(true, createHeaderContent());
@@ -75,7 +47,6 @@ public class MainLayout extends AppLayout {
         return header;
     }
 
-
     private ListItem[] createMenuItems() {
         return new ListItem[]{
                 new MenuItemInfo("Головна", LineAwesomeIcon.HOME_SOLID.create(), dev.ua.ikeepcalm.views.home.HomeView.class),
@@ -98,6 +69,33 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
                 new MenuItemInfo("", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
         };
+    }
+
+    public static class MenuItemInfo extends ListItem {
+
+        private final Class<? extends Component> view;
+
+        public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
+            this.view = view;
+            RouterLink link = new RouterLink();
+            link.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.XSMALL, LumoUtility.Height.MEDIUM, LumoUtility.AlignItems.CENTER, LumoUtility.Padding.Horizontal.SMALL,
+                    LumoUtility.TextColor.BODY);
+            link.setRoute(view);
+
+            Span text = new Span(menuTitle);
+            text.addClassNames(LumoUtility.FontWeight.MEDIUM, LumoUtility.FontSize.MEDIUM, LumoUtility.Whitespace.NOWRAP);
+
+            if (icon != null) {
+                link.add(icon);
+            }
+            link.add(text);
+            add(link);
+        }
+
+        public Class<?> getView() {
+            return view;
+        }
+
     }
 
     private static class ExternalMenuItemInfo extends ListItem {

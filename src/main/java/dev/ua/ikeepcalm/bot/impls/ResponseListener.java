@@ -6,6 +6,7 @@ import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
 import io.graversen.minecraft.rcon.MinecraftRcon;
 import io.graversen.minecraft.rcon.commands.WhiteListCommand;
+import io.graversen.minecraft.rcon.commands.base.ICommand;
 import io.graversen.minecraft.rcon.service.ConnectOptions;
 import io.graversen.minecraft.rcon.service.MinecraftRconService;
 import io.graversen.minecraft.rcon.service.RconDetails;
@@ -100,6 +101,7 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
 
             minecraftRconService.connectBlocking(Duration.ofSeconds(5));
             MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
+            minecraftRcon.sendAsync(() -> "comfywl add " + discordUser.getNickname());
             WhiteListCommand whiteListCommand = new WhiteListCommand(Target.player(discordUser.getNickname()), WhiteListModes.ADD);
             minecraftRcon.sendAsync(whiteListCommand);
 
@@ -114,6 +116,5 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
             ResponseUtil.sendFailureMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
         } discordUserService.update(discordUser);
     }
-
 
 }
