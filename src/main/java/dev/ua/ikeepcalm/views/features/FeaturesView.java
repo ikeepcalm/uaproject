@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
 import com.vaadin.flow.theme.lumo.LumoUtility.Display;
 import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
@@ -21,6 +22,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import dev.ua.ikeepcalm.views.MainLayout;
+import org.jetbrains.annotations.NotNull;
 
 @PageTitle("Механіки")
 @Route(value = "features", layout = MainLayout.class)
@@ -138,17 +140,23 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         HorizontalLayout container = new HorizontalLayout();
         container.addClassNames(AlignItems.CENTER, JustifyContent.BETWEEN);
 
-        VerticalLayout headerContainer = new VerticalLayout();
-        H2 header = new H2("Основні механіки серверу");
-        header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
-        Paragraph description = new Paragraph("Ті самі унікальні речі, які ви не зустрінете на інших серверах");
-        description.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
-        headerContainer.add(header, description);
-
+        VerticalLayout headerContainer = getVerticalLayout();
+        add(headerContainer);
 
         imageContainer = new OrderedList();
         imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
 
         add(container, imageContainer);
+    }
+
+    @NotNull
+    private static VerticalLayout getVerticalLayout() {
+        VerticalLayout headerContainer = new VerticalLayout();
+        H2 header = new H2("Механіки серверу");
+        header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
+        Paragraph description = new Paragraph("Ті самі унікальні речі, які ви не зустрінете на інших серверах");
+        description.addClassNames(Margin.Bottom.SMALL, Margin.Top.NONE, TextColor.SECONDARY, Display.FLEX, LumoUtility.FlexDirection.COLUMN, AlignItems.CENTER);
+        headerContainer.add(header, description);
+        return headerContainer;
     }
 }

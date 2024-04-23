@@ -24,11 +24,11 @@ public class ShopView extends Main implements HasComponents, HasStyle {
 
         imageContainer.add(
                 new ShopCard(
-                        "Допуск Гравця",
+                        "Допуск гравця",
                         "50",
                         """
+                                ✧ Роль гравця на DS сервері
                                 ✧ Моментальний доступ на сервер
-                                ✧ Доступна територія до 5,000 блоків
                                 ✧ Доступ до всіх функцій сервера""",
                         "images/discord.jpg",
                         "https://donatello.to/uaproject")
@@ -39,9 +39,11 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                         "Підписка Wealth-1",
                         "50",
                         """
-                                ✧ Доступна територія до 6,000 блоків
-                                ✧ Грейліст: 1 гравець в місяць
-                                ✧ Доступ до всіх функцій сервера""",
+                                ✧ Унікальна роль на DS сервері
+                                ✧ Доступ до приватного каналу
+                                ✧ Територія міста до 500 блоків
+                                ✧ Грейліст - 1 гравець в місяць
+                                ✧ Одне повідомлення поштою на день""",
                         "images/discord.jpg",
                         "https://donatello.to/uaproject")
         );
@@ -51,9 +53,11 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                         "Підписка Wealth-2",
                         "100",
                         """
-                                ✧ Доступна територія до 7,000 блоків
-                                ✧ Грейліст: 2 гравця в місяць
-                                ✧ Доступ до всіх функцій сервера""",
+                                ✧ Унікальна роль на DS сервері
+                                ✧ Доступ до приватного каналу
+                                ✧ Територія міста до 800 блоків
+                                ✧ Грейліст - 2 гравця в місяць
+                                ✧ Два повідомлення поштою на день""",
                         "images/discord.jpg",
                         "https://donatello.to/uaproject")
         );
@@ -63,12 +67,42 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                         "Підписка Wealth-3",
                         "150",
                         """
-                                ✧ Доступна територія до 8,000 блоків
-                                ✧ Грейліст: 3 гравці в місяць
-                                ✧ Доступ до всіх функцій сервера""",
+                                ✧ Унікальна роль на DS сервері
+                                ✧ Доступ до приватного каналу
+                                ✧ Територія міста до 1200 блоків
+                                ✧ Грейліст - 3 гравця в місяць
+                                ✧ Три повідомлення поштою на день""",
                         "images/discord.jpg",
                         "https://donatello.to/uaproject")
         );
+
+        imageContainer.add(
+                new ShopCard(
+                        "Підписка Wealth-4",
+                        "300",
+                        """
+                                ✧ Унікальна роль на DS сервері
+                                ✧ Доступ до приватного каналу
+                                ✧ Територія міста до 1800 блоків
+                                ✧ Грейліст - 3 гравця в місяць
+                                ✧ П'ять повідомлень поштою на день""",
+                        "images/discord.jpg",
+                        "https://donatello.to/uaproject")
+        );
+
+        imageContainer.add(
+                new ShopCard(
+                        "Nitro Booster",
+                        "free",
+                        """
+                                ✧ Особлива роль на сервері
+                                ✧ Доступ до приватного каналу
+                                ✧ Дозвіл керувати войс-каналами""",
+                        "images/discord.jpg",
+                        "https://discord.gg/nyAMvRru7x",
+                        "Приєднатися")
+        );
+
 
     }
 
@@ -80,12 +114,12 @@ public class ShopView extends Main implements HasComponents, HasStyle {
         container.addClassNames(AlignItems.CENTER, JustifyContent.BETWEEN);
 
         VerticalLayout headerContainer = new VerticalLayout();
-        H2 header = new H2("Основні механіки серверу");
+        H2 header = new H2("Магазин серверу");
         header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
-        Paragraph description = new Paragraph("Ті самі унікальні речі, які ви не зустрінете на інших серверах");
-        description.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
+        Paragraph description = new Paragraph("Хочете підтримати проєкт та отримати унікальні можливості? Тоді вам сюди!");
+        description.addClassNames(Margin.Bottom.SMALL, Margin.Top.NONE, TextColor.SECONDARY, Display.FLEX, FlexDirection.COLUMN, AlignItems.CENTER);
         headerContainer.add(header, description);
-
+        add(headerContainer);
 
         imageContainer = new OrderedList();
         imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);

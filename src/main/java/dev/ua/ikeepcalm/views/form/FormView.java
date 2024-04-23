@@ -108,7 +108,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 "Уявіть, що вас ображає адміністратор серверу. Що ви зробите, якщо потрапите у таку ситуацію?");
         conflict.setWidth("100%");
         memory.setHelperText(
-                "Опишіть ваш улюблений спогад із дитинства. Наприклад, особисто мій - коли мені дали пограти у WoT :'");
+                "Опишіть ваш улюблений спогад із дитинства. Наприклад, особисто мій - коли мені малому дали пограти у WoT :'");
         memory.setWidth("100%");
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
@@ -239,6 +239,9 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         if (key.isEmpty()) {
             getDiscordUser();
         } else {
+            if (service.findByDiscordId(key.get()).isEmpty()) {
+                return;
+            }
             currentPerson = service.findByDiscordId(key.get()).get();
             if (currentPerson.isAlreadyTried()) {
                 if (currentPerson.isWasApproved()){

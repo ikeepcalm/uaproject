@@ -5,7 +5,6 @@ import com.vaadin.flow.component.details.DetailsVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
@@ -13,7 +12,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import dev.ua.ikeepcalm.views.MainLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("Вікіпедія")
@@ -40,12 +38,23 @@ public class WikiView extends VerticalLayout {
         guestQuestions.addQuestion(new WikiCard("Як змінити свою роль до Гравця?", "Просто виконайте усі умови для цього - авторизуйтеся на сайті, заповніть анкету, дочекайтеся її перевірки / придбайте допуск. Якщо ви правильно вказали нікнейм, щойно умови будуть виконані, ви автоматично отримаєте роль гравця"));
         guestQuestions.addQuestion(new WikiCard("Як інший Гравець може витягти мене із гостів?", "Така можливість доступна лише для Спонсорів, якщо вони ще не використали усі свої спроби, відповідно їх рівню. Робиться це приблизно так: /graylist add <ім'я>"));
 
+        WikiGroup wealthQuestions = new WikiGroup("Wealth підписки");
+        wealthQuestions.addQuestion(new WikiCard("Які є види підписки на сервері?", "На сервері доступні чотири види підписки, більше ви можете дізнатися у розділі Магазин. Вони відрізняються один від одного кількістю можливостей, які вони надають"));
+        wealthQuestions.addQuestion(new WikiCard("Підписку потрібно поновлювати щомісяця?", "Так, ви вгадали. Підписку потрібно поновлювати щомісяця, щоб ви могли користуватися усіма можливостями, які вона надає"));
+        wealthQuestions.addQuestion(new WikiCard("Які переваги дає активна підписка?", """
+                З головного:\s
+                - ви можете заснувати місто із територією відповідною до рівня підписки;\s
+                - ви отримуєте доступ до приватного каналу на сервері;\s
+                - ви отримуєте унікальну роль на сервері;\s
+                - ви можете самостійно додавати певну кількість гостів у грейліст;\s
+                - ви отримуєте можливість відправляти повідомлення усім гравцям на сервері обмежену кількість разів у день"""));
+
         FlexLayout cardLayout = new FlexLayout();
         cardLayout.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         cardLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         cardLayout.setWidthFull();
 
-        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions)) {
+        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions)) {
             Div content = new Div();
             content.addClassNames(LumoUtility.FlexWrap.WRAP, LumoUtility.Overflow.HIDDEN, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN, LumoUtility.AlignItems.START, LumoUtility.Width.FULL);
             H2 header = new H2(group.getHeader());
@@ -54,9 +63,9 @@ public class WikiView extends VerticalLayout {
 
             for (WikiCard question : group.getQuestions()) {
                 Details details = new Details();
-                details.setSummaryText(question.getQuestion());
+                details.setSummaryText(question.question());
                 TextArea answer = new TextArea();
-                answer.setValue(question.getAnswer());
+                answer.setValue(question.answer());
                 answer.setReadOnly(true);
                 answer.setLabel("");
                 answer.setHeight("auto");

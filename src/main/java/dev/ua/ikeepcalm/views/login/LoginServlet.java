@@ -2,7 +2,6 @@ package dev.ua.ikeepcalm.views.login;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
-import com.vaadin.flow.component.page.WebStorage;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import io.mokulu.discord.oauth.DiscordOAuth;
@@ -41,13 +40,13 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationCode = request.getParameter("code");
 
         if (authorizationCode != null) {
             String accessToken = getAccessToken(authorizationCode);
             if (accessToken != null) {
-                Optional<DiscordUser> user = discordUserService.findByDiscordId(getUserInfo(accessToken).get(0));
+                Optional<DiscordUser> user = discordUserService.findByDiscordId(getUserInfo(accessToken).getFirst());
                 if (user.isPresent()) {
                     discordUserService.update(user.get());
                     String redirectUrl = "/form?" + "key=" + user.get().getDiscordId();

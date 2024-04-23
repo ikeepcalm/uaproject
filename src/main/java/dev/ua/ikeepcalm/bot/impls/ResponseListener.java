@@ -56,7 +56,7 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
             System.out.println("Approved");
             EmbedBuilder embedBuilder = new EmbedBuilder(event.getMessage().getEmbeds().getFirst());
             embedBuilder.setColor(Color.GREEN);
-            embedBuilder.setFooter("Прийняв: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl());
+            embedBuilder.setFooter("Прийняв: " + event.getUser().getAsMention(), event.getUser().getAvatarUrl());
             discordUser.setWasApproved(true);
             event.getChannel().editMessageEmbedsById(event.getMessageId(), embedBuilder.build()).setComponents().queue();
             Guild guild = event.getGuild();
@@ -108,7 +108,7 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
             EmbedBuilder embedBuilder = new EmbedBuilder(event.getMessage().getEmbeds().getFirst());
             embedBuilder.setColor(Color.RED);
             discordUser.setWasApproved(false);
-            embedBuilder.setFooter("Відхилив: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl());
+            embedBuilder.setFooter("Відхилив: " + event.getUser().getAsMention(), event.getUser().getAvatarUrl());
             event.getChannel().editMessageEmbedsById(event.getMessageId(),
                     embedBuilder.build()).setComponents().queue();
             ResponseUtil.sendFailureMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());

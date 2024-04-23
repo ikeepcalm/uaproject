@@ -1,5 +1,8 @@
 package dev.ua.ikeepcalm.views.form.source;
 
+import lombok.Getter;
+
+@Getter
 public enum LauncherType {
     TLAUNCHER("Tlauncher"),
     TLAUNCHER_LEGACY("Tlauncher Legacy"),
@@ -19,7 +22,4 @@ public enum LauncherType {
         this.launcher = launcher;
     }
 
-    public String getLauncher() {
-        return launcher;
-    }
 }

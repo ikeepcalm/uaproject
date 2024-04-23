@@ -1,5 +1,8 @@
 package dev.ua.ikeepcalm.views.form.source;
 
+import lombok.Getter;
+
+@Getter
 public enum PlayerType {
 
     BUILDER("Будівельник"),
@@ -15,7 +18,4 @@ public enum PlayerType {
         this.type = type;
     }
 
-    public String getType() {
-        return type;
-    }
 }

@@ -1,8 +1,13 @@
 package dev.ua.ikeepcalm.views.wiki;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 public class WikiGroup {
 
     private String header;
@@ -14,23 +19,8 @@ public class WikiGroup {
         this.questions = new ArrayList<>();
     }
 
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
     public void addQuestion(WikiCard question) {
         questions.add(question);
     }
 
-    public List<WikiCard> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<WikiCard> questions) {
-        this.questions = questions;
-    }
 }
