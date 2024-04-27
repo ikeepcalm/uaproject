@@ -104,7 +104,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         gameLauncher.setWidth("min-content");
         setLaunchersData(gameLauncher);
         task.setHelperText(
-                "Для того, щоб викопати яму, трьом чоловікам потрібно 5 годин. Скільки часу потрібно восьми чоловікам?");
+                "Для того, щоб викопати яму, трьом чоловікам потрібно 5 годин. Скільки часу потрібно восьми чоловікам? Відповідь обґрунтуйте :)");
         task.setWidth("100%");
         experience.setHelperText("У вас є досвід гри на приватних майнкрафт серверах? Опишіть його якомога детальніше!");
         experience.setWidth("100%");

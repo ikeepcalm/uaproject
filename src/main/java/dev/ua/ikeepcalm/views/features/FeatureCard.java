@@ -5,6 +5,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
 import com.vaadin.flow.theme.lumo.LumoUtility.Background;
 import com.vaadin.flow.theme.lumo.LumoUtility.BorderRadius;
@@ -21,7 +22,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 public class FeatureCard extends ListItem {
 
     public FeatureCard(String title, String text, String file, String label) {
-        addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM,
+        addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.CENTER, Padding.MEDIUM,
                 BorderRadius.LARGE);
 
         Div div = new Div();
@@ -37,6 +38,7 @@ public class FeatureCard extends ListItem {
 
         Span header = new Span();
         header.addClassNames(FontSize.XLARGE, FontWeight.SEMIBOLD);
+        header.addClassNames(LumoUtility.TextAlignment.CENTER, Margin.Vertical.SMALL);
         header.setText(title);
 
 

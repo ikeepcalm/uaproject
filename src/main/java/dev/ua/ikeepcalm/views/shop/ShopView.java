@@ -13,7 +13,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.*;
 import dev.ua.ikeepcalm.views.MainLayout;
 
-@PageTitle("Магазин")
+@PageTitle("Крамниця")
 @Route(value = "shop", layout = MainLayout.class)
 public class ShopView extends Main implements HasComponents, HasStyle {
 
@@ -30,8 +30,8 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Роль гравця на DS сервері
                                 ✧ Моментальний доступ на сервер
                                 ✧ Доступ до всіх функцій сервера""",
-                        "images/discord.jpg",
-                        "https://donatello.to/uaproject")
+                        "images/graylist.png",
+                        "https://donatello.to/fyzzzen?a=50&c=&m=Graylist")
                 );
 
         imageContainer.add(
@@ -44,8 +44,8 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Територія міста до 500 блоків
                                 ✧ Грейліст - 1 гравець в місяць
                                 ✧ Одне повідомлення поштою на день""",
-                        "images/discord.jpg",
-                        "https://donatello.to/uaproject")
+                        "images/wealth.png",
+                        "https://donatello.to/fyzzzen?a=50&c=&m=Wealth-1")
         );
 
         imageContainer.add(
@@ -58,8 +58,8 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Територія міста до 800 блоків
                                 ✧ Грейліст - 2 гравця в місяць
                                 ✧ Два повідомлення поштою на день""",
-                        "images/discord.jpg",
-                        "https://donatello.to/uaproject")
+                        "images/wealth.png",
+                        "https://donatello.to/fyzzzen?a=100&c=&m=Wealth-2")
         );
 
         imageContainer.add(
@@ -72,8 +72,8 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Територія міста до 1200 блоків
                                 ✧ Грейліст - 3 гравця в місяць
                                 ✧ Три повідомлення поштою на день""",
-                        "images/discord.jpg",
-                        "https://donatello.to/uaproject")
+                        "images/wealth.png",
+                        "https://donatello.to/fyzzzen?a=150&c=&m=Wealth-3")
         );
 
         imageContainer.add(
@@ -86,8 +86,8 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Територія міста до 1800 блоків
                                 ✧ Грейліст - 3 гравця в місяць
                                 ✧ П'ять повідомлень поштою на день""",
-                        "images/discord.jpg",
-                        "https://donatello.to/uaproject")
+                        "images/wealth.png",
+                        "https://donatello.to/fyzzzen?a=300&c=&m=Wealth-4")
         );
 
         imageContainer.add(
@@ -98,12 +98,10 @@ public class ShopView extends Main implements HasComponents, HasStyle {
                                 ✧ Особлива роль на сервері
                                 ✧ Доступ до приватного каналу
                                 ✧ Дозвіл керувати войс-каналами""",
-                        "images/discord.jpg",
+                        "images/nitro.png",
                         "https://discord.gg/nyAMvRru7x",
                         "Приєднатися")
         );
-
-
     }
 
     private void constructUI() {
@@ -114,7 +112,7 @@ public class ShopView extends Main implements HasComponents, HasStyle {
         container.addClassNames(AlignItems.CENTER, JustifyContent.BETWEEN);
 
         VerticalLayout headerContainer = new VerticalLayout();
-        H2 header = new H2("Магазин серверу");
+        H2 header = new H2("Крамниця серверу");
         header.addClassNames(Margin.Bottom.NONE, Margin.Top.XLARGE, FontSize.XXXLARGE);
         Paragraph description = new Paragraph("Хочете підтримати проєкт та отримати унікальні можливості? Тоді вам сюди!");
         description.addClassNames(Margin.Bottom.SMALL, Margin.Top.NONE, TextColor.SECONDARY, Display.FLEX, FlexDirection.COLUMN, AlignItems.CENTER);

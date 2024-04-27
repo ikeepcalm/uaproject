@@ -22,21 +22,21 @@ public class DiscordUser extends PersistentUser {
     private String nickname;
     @Column
     private LocalDate birthday;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String advised;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String hobbies;
     @Column
     private PlayerType typeOfPlayer;
     @Column
     private LauncherType gameLauncher;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String task;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String experience;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String conflict;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String memory;
     @Column
     private boolean alreadyTried;

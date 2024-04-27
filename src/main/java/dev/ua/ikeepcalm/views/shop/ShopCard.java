@@ -15,7 +15,7 @@ public class ShopCard extends ListItem {
         Div div = new Div();
         div.addClassNames(Background.CONTRAST, Display.FLEX, AlignItems.CENTER, JustifyContent.CENTER,
                 Margin.Bottom.MEDIUM, Overflow.HIDDEN, BorderRadius.MEDIUM, Width.FULL);
-        div.setHeight("160px");
+        div.setHeight("92px");
 
         Image image = new Image(file, "placeholder " + file);
         image.setWidth("100%");
@@ -47,8 +47,7 @@ public class ShopCard extends ListItem {
         Div div = new Div();
         div.addClassNames(Background.CONTRAST, Display.FLEX, AlignItems.CENTER, JustifyContent.CENTER,
                 Margin.Bottom.MEDIUM, Overflow.HIDDEN, BorderRadius.MEDIUM, Width.FULL);
-
-        div.setHeight("160px");
+        div.setHeight("92px");
 
         Image image = new Image(file, "placeholder " + file);
         image.setWidth("100%");

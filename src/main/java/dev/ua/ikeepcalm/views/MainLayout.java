@@ -53,7 +53,7 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Механіки", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
                 new MenuItemInfo("Правила", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
                 new MenuItemInfo("Вікіпедія", LineAwesomeIcon.WIKIPEDIA_W.create(), dev.ua.ikeepcalm.views.wiki.WikiView.class),
-                new MenuItemInfo("Магазин", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
+                new MenuItemInfo("Крамниця", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
                 new MenuItemInfo("Анкета", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
                 new ExternalMenuItemInfo("↝", LineAwesomeIcon.DISCORD.create(), "https://discord.gg/nyAMvRru7x"),
                 new ExternalMenuItemInfo("↝", LineAwesomeIcon.MAP.create(), "https://map.uaproject.xyz/"),
