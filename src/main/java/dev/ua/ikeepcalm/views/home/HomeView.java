@@ -1,5 +1,6 @@
 package dev.ua.ikeepcalm.views.home;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,7 +25,7 @@ public class HomeView extends VerticalLayout {
         scroller.getStyle().set("max-height", "100vh");
 
         VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.getStyle().set("padding", "20px");
+        contentLayout.getStyle().set("padding", "10px");
         contentLayout.setWidthFull();
         Div content = new Div();
         Div imageTextContainer = new Div();
@@ -37,19 +38,35 @@ public class HomeView extends VerticalLayout {
         contentLayout.add(content);
 
         Div header = new Div();
-        header.addClassNames(LumoUtility.AlignItems.CENTER, LumoUtility.JustifyContent.CENTER, LumoUtility.Display.FLEX, LumoUtility.Padding.Horizontal.LARGE, LumoUtility.Padding.Vertical.LARGE, LumoUtility.Width.FULL, LumoUtility.Margin.NONE, LumoUtility.BoxSizing.BORDER, LumoUtility.FlexDirection.COLUMN, LumoUtility.MaxWidth.FULL, LumoUtility.Margin.AUTO);
+        header.addClassNames(LumoUtility.AlignItems.CENTER, LumoUtility.JustifyContent.CENTER, LumoUtility.Display.FLEX, LumoUtility.Padding.Horizontal.LARGE, LumoUtility.Padding.Vertical.NONE, LumoUtility.Width.FULL, LumoUtility.Margin.NONE, LumoUtility.BoxSizing.BORDER, LumoUtility.FlexDirection.COLUMN, LumoUtility.MaxWidth.FULL, LumoUtility.Margin.AUTO);
         Image logo = new Image("images/uaproject-pfp.png", "Logo");
-        logo.getStyle().set("width", "100px");
+        logo.getStyle().set("width", "70px");
         header.getStyle().set("width", "100%");
-        H1 title = new H1("Uaproject Reborn");
+        H2 title = new H2("Uaproject");
         title.addClassName(LumoUtility.Margin.Bottom.NONE);
         title.addClassName(LumoUtility.TextColor.SECONDARY);
-        H3 desc = new H3("Український Minecraft сервер");
+        H4 desc = new H4("Український Minecraft сервер");
         desc.addClassName(LumoUtility.TextColor.TERTIARY);
         desc.addClassName(LumoUtility.Margin.Top.NONE);
+        desc.addClassName(LumoUtility.Margin.Bottom.MEDIUM);
+
+        IFrame iFrame = new IFrame("https://www.youtube.com/embed/bVTkClIzU_I?si=oqmk-gJpU0i6nQ-G");
+        UI.getCurrent().getPage().retrieveExtendedClientDetails(details -> {
+            if (details.getScreenWidth() < 1200) {
+                iFrame.setHeight("200px");
+                iFrame.setWidth("300px");
+            } else {
+                iFrame.setHeight("315px");
+                iFrame.setWidth("560px");
+            }
+        });
+        iFrame.setAllow("accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
+        iFrame.getElement().setAttribute("allowfullscreen", true);
+        iFrame.getElement().setAttribute("frameborder", "0");
+
         H5 more = new H5("Скоро тут буде купа тексту, а поки...");
         more.addClassName(LumoUtility.TextColor.TERTIARY);
-        more.addClassName(LumoUtility.Margin.Top.XLARGE);
+        more.addClassName(LumoUtility.Margin.Top.MEDIUM);
 
         Footer footer = new Footer();
         H6 copyright = new H6("© 2024 uaproject / ikeepcalm");
@@ -62,13 +79,12 @@ public class HomeView extends VerticalLayout {
         header.add(logo);
         header.add(title);
         header.add(desc);
+        header.add(iFrame);
         header.add(more);
         header.add(footer);
         contentLayout.add(header);
         scroller.setContent(contentLayout);
         add(scroller);
-
-
 
     }
 }

@@ -22,15 +22,17 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
-import dev.ua.ikeepcalm.utils.ResponseUtil;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
+import dev.ua.ikeepcalm.utils.ResponseUtil;
 import dev.ua.ikeepcalm.views.MainLayout;
 import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import dev.ua.ikeepcalm.views.form.source.PlayerType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,9 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
     private final DiscordUserService service;
     private DiscordUser currentPerson;
     private JDA jda;
+
+    @Value("${discord.admin-channel-id}")
+    private long adminChannelId;
 
     public FormView(DiscordUserService service, JDA jda) {
         this.service = service;
@@ -207,7 +212,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 UI.getCurrent().navigate("");
             });
             dialog.open();
-            ResponseUtil.sendNewForm(currentPerson, jda);
+            new ResponseUtil(null, adminChannelId).sendNewForm(currentPerson, jda);
         });
 
         layoutRow.add(buttonPrimary);
@@ -253,8 +258,9 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 return;
             }
 
-            Member member = guild.retrieveMemberById(currentPerson.getDiscordId()).complete();
-            if (member == null) {
+            try {
+                Member member = guild.retrieveMemberById(currentPerson.getDiscordId()).complete();
+            } catch (ErrorResponseException exc) {
                 ConfirmDialog dialog = new ConfirmDialog();
                 dialog.setHeader("Ваш акаунт не знайдено!");
                 dialog.setText("Для того, щоб подати анкету, вам потрібно бути у нашому дискорд сервері. Перейдіть за посиланням, щоб приєднатися до нас!");
@@ -262,7 +268,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
                 dialog.setConfirmText("Приєднатися");
                 dialog.addConfirmListener(e -> {
                     dialog.close();
-                    UI.getCurrent().navigate("https://discord.gg/nyAMvRru7x");
+                    UI.getCurrent().getPage().setLocation("https://discord.gg/nyAMvRru7x");
                 });
                 dialog.addCancelListener(event -> {
                     dialog.close();
@@ -273,7 +279,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
             }
 
             if (currentPerson.isAlreadyTried()) {
-                if (currentPerson.isWasApproved()){
+                if (currentPerson.isWasApproved()) {
                     ConfirmDialog dialog = new ConfirmDialog();
                     dialog.setHeader("Анкету було прийнято!");
                     dialog.setText("З радістю повідомляю, що ваша анкета була прийнята! Доступ гравця було надано на вказаний у анкеті нікнейм. Якщо у вас виникнуть проблеми, звертайтеся до адміністрації сервера. Дякуємо за участь!");

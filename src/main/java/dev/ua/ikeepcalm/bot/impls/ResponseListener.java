@@ -30,6 +30,15 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
     @Value("${minecraft.password}")
     private String rconPassword;
 
+    @Value("${discord.guest-role-id}")
+    private long roleToRemoveId;
+
+    @Value("${discord.player-role-id}")
+    private long roleToAddId;
+
+    @Value("${discord.fallback-channel-id}")
+    private long fallbackChannelId;
+
     public ResponseListener(DiscordUserService discordUserService) {
         this.discordUserService = discordUserService;
     }
@@ -64,26 +73,23 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
             }
 
             String newNickname = discordUser.getNickname();
-            member.modifyNickname(newNickname).queueAfter(5, java.util.concurrent.TimeUnit.SECONDS);
-
-            long roleToRemoveId = 1221885602690240532L;
-            long roleToAddId = 1221552838807654456L;
+            member.modifyNickname(newNickname).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
 
             Role roleToRemove = guild.getRoleById(roleToRemoveId);
             if (roleToRemove != null) {
-                guild.removeRoleFromMember(member, roleToRemove).queueAfter(5, java.util.concurrent.TimeUnit.SECONDS);
+                guild.removeRoleFromMember(member, roleToRemove).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
             } else {
                 System.out.println("Warning: Role to remove not found!");
             }
 
             Role roleToAdd = guild.getRoleById(roleToAddId);
             if (roleToAdd != null) {
-                guild.addRoleToMember(member, roleToAdd).queueAfter(5, java.util.concurrent.TimeUnit.SECONDS);
+                guild.addRoleToMember(member, roleToAdd).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
             } else {
                 System.out.println("Warning: Role to add not found!");
             }
 
-            ResponseUtil.sendSuccessMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
+            new ResponseUtil(fallbackChannelId, null).sendSuccessMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
 
 //            final MinecraftRconService minecraftRconService = new MinecraftRconService(
 //                    new RconDetails(rconUrl, rconPort, rconPassword),
@@ -103,7 +109,7 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
             embedBuilder.setFooter("Відхилив: " + event.getUser().getName(), event.getUser().getAvatarUrl());
             event.getChannel().editMessageEmbedsById(event.getMessageId(),
                     embedBuilder.build()).setComponents().queue();
-            ResponseUtil.sendFailureMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
+            new ResponseUtil(fallbackChannelId, null).sendFailureMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
         }
         discordUserService.update(discordUser);
     }

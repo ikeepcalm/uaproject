@@ -144,7 +144,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
         add(headerContainer);
 
         imageContainer = new OrderedList();
-        imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
+        imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.Bottom.SMALL, Padding.NONE);
 
         add(container, imageContainer);
     }
