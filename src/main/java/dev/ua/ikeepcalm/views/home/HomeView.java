@@ -42,7 +42,7 @@ public class HomeView extends VerticalLayout {
         Image logo = new Image("images/uaproject-pfp.png", "Logo");
         logo.getStyle().set("width", "70px");
         header.getStyle().set("width", "100%");
-        H2 title = new H2("Uaproject");
+        H2 title = new H2("UAProject");
         title.addClassName(LumoUtility.Margin.Bottom.NONE);
         title.addClassName(LumoUtility.TextColor.SECONDARY);
         H4 desc = new H4("Український Minecraft сервер");

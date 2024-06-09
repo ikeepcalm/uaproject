@@ -6,19 +6,12 @@ import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 import java.util.Scanner;
 
 @SpringBootApplication
 @Theme(value = "uaproject")
 public class Application implements AppShellConfigurator, CommandLineRunner {
-
-    private final org.springframework.context.ApplicationContext applicationContext;
-
-    public Application(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

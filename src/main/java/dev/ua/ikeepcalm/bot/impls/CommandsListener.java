@@ -90,7 +90,7 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
         return gson.fromJson(response.body(), Donatello.class);
     }
 
-    private static long parseDuration(String duration) {
+    private static long parseDuration(String duration) throws NumberFormatException {
         String[] units = duration.split(" ");
         long totalMinutes = 0;
 
@@ -166,9 +166,15 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                         List<DiscordUser> users = discordUserService.findAll();
                         users.forEach(user -> {
                             if (user.isWasApproved()) {
-                                Member member = Objects.requireNonNull(event.getGuild()).retrieveMemberById(user.getDiscordId()).complete();
-                                event.getGuild().addRoleToMember(member, Objects.requireNonNull(event.getGuild().getRoleById(1221552838807654456L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
-                                event.getGuild().removeRoleFromMember(member, Objects.requireNonNull(event.getGuild().getRoleById(1221885602690240532L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                                Guild guild = event.getGuild();
+                                if (guild == null) {
+                                    return;
+                                }
+                                try {
+                                    Member member = guild.retrieveMemberById(user.getDiscordId()).complete();
+                                    guild.addRoleToMember(member, Objects.requireNonNull(guild.getRoleById(1221552838807654456L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                                    guild.removeRoleFromMember(member, Objects.requireNonNull(guild.getRoleById(1221885602690240532L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                                } catch (ErrorResponseException ignored) {}
                             }
                         });
                         event.getHook().sendMessage("Roles synced!").queue();
@@ -177,8 +183,14 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                         List<DiscordUser> users = discordUserService.findAll();
                         users.forEach(user -> {
                             if (user.isWasApproved()) {
-                                Member member = Objects.requireNonNull(event.getGuild()).retrieveMemberById(user.getDiscordId()).complete();
-                                event.getGuild().modifyNickname(member, user.getNickname()).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                                Guild guild = event.getGuild();
+                                if (guild == null) {
+                                    return;
+                                }
+                                try {
+                                    Member member = guild.retrieveMemberById(user.getDiscordId()).complete();
+                                    event.getGuild().modifyNickname(member, user.getNickname()).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                                } catch (ErrorResponseException ignored) {}
                             }
                         });
                         event.getHook().sendMessage("Nicknames synced!").queue();
@@ -220,7 +232,14 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                 event.deferReply().queue();
                 Member member = Objects.requireNonNull(event.getOption("user")).getAsMember();
                 String reason = Objects.requireNonNull(event.getOption("reason")).getAsString();
-                long minutes = parseDuration(event.getOption("duration").getAsString());
+                long minutes;
+                try {
+                    minutes = parseDuration(event.getOption("duration").getAsString());
+                } catch (NumberFormatException e) {
+                    event.getHook().sendMessage("Invalid duration! Consider using d, m, s!").queue();
+                    return;
+                }
+
                 Objects.requireNonNull(event.getGuild()).timeoutFor(member, minutes, TimeUnit.MINUTES).reason(reason).queue();
                 event.getHook().sendMessage("User was muted!").queue();
                 EmbedBuilder embed = new EmbedBuilder();
@@ -250,7 +269,15 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                 event.deferReply().queue();
                 Member member = Objects.requireNonNull(event.getOption("user")).getAsMember();
                 String reason = Objects.requireNonNull(event.getOption("reason")).getAsString();
-                int minutes = (int) parseDuration(event.getOption("duration").getAsString());
+                int minutes;
+
+                try {
+                    minutes = Integer.parseInt(event.getOption("duration").getAsString());
+                } catch (NumberFormatException e) {
+                    event.getHook().sendMessage("Invalid duration! Consider using d, m, s!").queue();
+                    return;
+                }
+
                 Objects.requireNonNull(event.getGuild()).ban(member, minutes, TimeUnit.MINUTES).queue();
                 event.getHook().sendMessage("User was banned!").queue();
                 EmbedBuilder embed = new EmbedBuilder();

@@ -4,9 +4,11 @@ import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.details.DetailsVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -49,13 +51,19 @@ public class WikiView extends VerticalLayout {
                 - ви можете самостійно додавати певну кількість гостів у грейліст;\s
                 - ви отримуєте можливість відправляти повідомлення усім гравцям на сервері обмежену кількість разів у день"""));
 
+        WikiGroup economyQuestions = new WikiGroup("Економіка сервера");
+        economyQuestions.addQuestion(new WikiCard("Що таке Гаманець?", "Гаманець - 'магічний' предмет, у якому ви можете зберігати власні кошти на ігровому сервері. Візьміть його в руку і натисніть ПКМ!"));
+        economyQuestions.addQuestion(new WikiCard("Як отримати Гаманець?", "Його потрібно скрафтити! Для цього вам знадобиться: 6 шкіри, 2 паперу, 1 візер-троянда. Крафт виглядає наступним чином:", "images/wallet.png"));
+        economyQuestions.addQuestion(new WikiCard("Яка ж валюта сервера?", "На сервері є три різновиди валюти: Копійки, Ліки і Аури. Шістьдесят копійок дорівнюють одному ліку, а шістдесят ліків дорівнюють одному ауру"));
+        economyQuestions.addQuestion(new WikiCard("Як заробляти гроші?", "Для цього існує цікава механіка: оцінка. Обираєте будь-який предмет, і переносите його у вміст Гаманця, бачите оцінку у Копійках, після чого підтверджуєте продаж або відміняєте!"));
+
         FlexLayout cardLayout = new FlexLayout();
         cardLayout.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         cardLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         cardLayout.setWidthFull();
         cardLayout.addClassName(LumoUtility.Margin.Bottom.SMALL);
 
-        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions)) {
+        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions, economyQuestions)) {
             Div content = new Div();
             content.addClassNames(LumoUtility.FlexWrap.WRAP, LumoUtility.Overflow.HIDDEN, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN, LumoUtility.AlignItems.START, LumoUtility.Width.FULL);
             H2 header = new H2(group.getHeader());
@@ -65,6 +73,8 @@ public class WikiView extends VerticalLayout {
             for (WikiCard question : group.getQuestions()) {
                 Details details = new Details();
                 details.setSummaryText(question.question());
+                details.getStyle().set("padding", "10px");
+
                 TextArea answer = new TextArea();
                 answer.setValue(question.answer());
                 answer.setReadOnly(true);
@@ -72,11 +82,23 @@ public class WikiView extends VerticalLayout {
                 answer.setHeight("auto");
                 answer.setWidthFull();
 
-                details.add(new VerticalLayout(answer));
+                VerticalLayout verticalLayout = new VerticalLayout();
+                verticalLayout.getStyle().setAlignItems(Style.AlignItems.CENTER);
+                verticalLayout.getStyle().setDisplay(Style.Display.FLEX);
+                verticalLayout.add(answer);
 
                 details.addThemeVariants(DetailsVariant.FILLED);
                 details.setWidthFull();
                 details.getStyle().set("margin-bottom", "10px");
+
+                if (question.filePath() != null) {
+                    Image image = new Image(question.filePath(), "Image");
+                    image.setWidth("50%");
+                    image.getStyle().set("margin-top", "10px");
+                    verticalLayout.add(image);
+                }
+
+                details.add(verticalLayout);
 
                 content.add(details);
                 cardLayout.add(content);

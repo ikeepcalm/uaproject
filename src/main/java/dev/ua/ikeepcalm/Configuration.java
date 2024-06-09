@@ -74,7 +74,7 @@ public class Configuration {
                 Commands.slash("mute", "Mutes a user").addOptions(
                         new OptionData(OptionType.USER, "user", "The user to mute").setRequired(true),
                         new OptionData(OptionType.STRING, "reason", "The reason for the mute").setRequired(true),
-                        new OptionData(OptionType.STRING, "duration", "The duration of the mute in minutes").setRequired(true),
+                        new OptionData(OptionType.STRING, "duration", "The duration of the mute, you can use this approach here -> 12d").setRequired(true),
                         new OptionData(OptionType.ATTACHMENT, "proof", "The reason for the mute, now with proof").setRequired(false)
                 ).setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("unmute", "Unmutes a user").addOptions(
@@ -83,7 +83,7 @@ public class Configuration {
                 Commands.slash("ban", "Bans a user").addOptions(
                         new OptionData(OptionType.USER, "user", "The user to ban").setRequired(true),
                         new OptionData(OptionType.STRING, "reason", "The reason for the ban").setRequired(true),
-                        new OptionData(OptionType.STRING, "duration", "The duration of the ban in minutes").setRequired(true),
+                        new OptionData(OptionType.STRING, "duration", "The duration of the ban, you can use this approach here -> 365d").setRequired(true),
                         new OptionData(OptionType.ATTACHMENT, "proof", "The reason for the ban, now with proof").setRequired(false)
                 ).setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS))
         ).queue();

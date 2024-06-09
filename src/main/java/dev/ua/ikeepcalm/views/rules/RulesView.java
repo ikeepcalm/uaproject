@@ -46,8 +46,10 @@ public class RulesView extends VerticalLayout {
 
         Span span = new Span("Правила можуть змінюватися без попередження. Перевіряйте їх регулярно!");
         span.getStyle().set("font-size", "0.8em");
+        span.addClassNames(LumoUtility.FontWeight.SEMIBOLD);
         Span span2 = new Span("Незнання правил не звільняє від відповідальності за їх порушення!");
         span2.getStyle().set("font-size", "0.8em");
+        span2.addClassNames(LumoUtility.FontWeight.SEMIBOLD);
         contentLayout.add(span);
         contentLayout.add(span2);
 

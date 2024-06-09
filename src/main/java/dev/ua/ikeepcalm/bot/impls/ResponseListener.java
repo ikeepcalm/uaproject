@@ -77,14 +77,14 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
 
             Role roleToRemove = guild.getRoleById(roleToRemoveId);
             if (roleToRemove != null) {
-                guild.removeRoleFromMember(member, roleToRemove).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                guild.removeRoleFromMember(member, roleToRemove).queueAfter(3, java.util.concurrent.TimeUnit.SECONDS);
             } else {
                 System.out.println("Warning: Role to remove not found!");
             }
 
             Role roleToAdd = guild.getRoleById(roleToAddId);
             if (roleToAdd != null) {
-                guild.addRoleToMember(member, roleToAdd).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
+                guild.addRoleToMember(member, roleToAdd).queueAfter(5, java.util.concurrent.TimeUnit.SECONDS);
             } else {
                 System.out.println("Warning: Role to add not found!");
             }

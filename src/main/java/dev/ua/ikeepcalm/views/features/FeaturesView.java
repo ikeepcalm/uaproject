@@ -70,7 +70,7 @@ public class FeaturesView extends Main implements HasComponents, HasStyle {
                 new FeatureCard(
                         "Режим гостя",
                         "Необхідність заповнювати анкету або покупати допуск на сервер, щоб вперше зайти, насправді, дуже дратує. Саме тому ми додали режим гостя, який дозволяє вам зайти на сервер навіть зараз!",
-                        "images/spectator.jpg",
+                        "images/guest.webp",
                         "Minecraft")
         );
 

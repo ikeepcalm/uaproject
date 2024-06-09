@@ -30,6 +30,8 @@ public class DiscordUser extends PersistentUser {
     private PlayerType typeOfPlayer;
     @Column
     private LauncherType gameLauncher;
+    @Column
+    private String customLauncher;
     @Column(columnDefinition = "TEXT")
     private String task;
     @Column(columnDefinition = "TEXT")

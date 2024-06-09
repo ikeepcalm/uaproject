@@ -34,6 +34,7 @@ public class ShopCard extends ListItem {
 
         Button badge = new Button();
         badge.addThemeName(ButtonVariant.MATERIAL_CONTAINED.getVariantName());
+        badge.getStyle().set("cursor", "pointer");
         badge.setText("Придбати за " + price + "₴");
         badge.addClickListener(e -> UI.getCurrent().getPage().executeJs("window.open('" + url + "', '_blank')"));
 
@@ -67,6 +68,7 @@ public class ShopCard extends ListItem {
         Button badge = new Button();
         badge.addThemeName(ButtonVariant.MATERIAL_CONTAINED.getVariantName());
         badge.setText(linkText);
+        badge.getStyle().set("cursor", "pointer");
         badge.addClickListener(e -> UI.getCurrent().getPage().executeJs("window.open('" + url + "', '_blank')"));
 
         add(div, header, description, badge);
