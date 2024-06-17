@@ -57,13 +57,26 @@ public class WikiView extends VerticalLayout {
         economyQuestions.addQuestion(new WikiCard("Яка ж валюта сервера?", "На сервері є три різновиди валюти: Копійки, Ліки і Аури. Шістьдесят копійок дорівнюють одному ліку, а шістдесят ліків дорівнюють одному ауру"));
         economyQuestions.addQuestion(new WikiCard("Як заробляти гроші?", "Для цього існує цікава механіка: оцінка. Обираєте будь-який предмет, і переносите його у вміст Гаманця, бачите оцінку у Копійках, після чого підтверджуєте продаж або відміняєте!"));
 
+        WikiGroup featuresQuestions = new WikiGroup("Особливості сервера");
+        featuresQuestions.addQuestion(new WikiCard("Як зробити рамку або стійку для броні невидимою?", "Киньте сплеш зілля невидимості. Щоб відновити видимість рамки або стійки, киньте на них сплеш бутильок з простою водою!"));
+        featuresQuestions.addQuestion(new WikiCard("Чи можна змінювати позу стійки для броні?", "Можна! Активуйте її важелем, щоб змінити позу на одну із багатьох доступних"));
+        featuresQuestions.addQuestion(new WikiCard("Помер і загубив свої речі. Що робити?", """
+                - Не панікувати! Все під контролем
+                - Визначити місце смерті. Прямувати туди
+                - Орієнтуватися на білий ореол з частиць
+                
+                На місці смерті буде видно світловий стовп, це - ваша душа. Вона існує не більше не менше 60 хвилин. Щоб забрати свої речі, і відновити певний рівень досвіду, просто підійдіть до неї
+                """));
+        featuresQuestions.addQuestion(new WikiCard("Прискорення на доріжках. Як це працює?", "Ваш персонаж рухається швидше на протоптаних доріжках, які, наприклад, можна знайти нативно згенерованими у селах"));
+        featuresQuestions.addQuestion(new WikiCard("Загубив свою точку смерті. Що робити?", "Можливо, у вас є Компас відновлення? Він завжди вказує на останню точку смерті, а отже має сенс мати його у швидкому доступі"));
+
         FlexLayout cardLayout = new FlexLayout();
         cardLayout.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         cardLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         cardLayout.setWidthFull();
         cardLayout.addClassName(LumoUtility.Margin.Bottom.SMALL);
 
-        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions, economyQuestions)) {
+        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions, economyQuestions, featuresQuestions)) {
             Div content = new Div();
             content.addClassNames(LumoUtility.FlexWrap.WRAP, LumoUtility.Overflow.HIDDEN, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN, LumoUtility.AlignItems.START, LumoUtility.Width.FULL);
             H2 header = new H2(group.getHeader());

@@ -4,6 +4,10 @@ import dev.ua.ikeepcalm.bot.EventDispatcher;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
+import io.graversen.minecraft.rcon.MinecraftRcon;
+import io.graversen.minecraft.rcon.service.ConnectOptions;
+import io.graversen.minecraft.rcon.service.MinecraftRconService;
+import io.graversen.minecraft.rcon.service.RconDetails;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.time.Duration;
 import java.util.Optional;
 
 @Component
@@ -91,15 +96,13 @@ public class ResponseListener extends ListenerAdapter implements EventDispatcher
 
             new ResponseUtil(fallbackChannelId, null).sendSuccessMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
 
-//            final MinecraftRconService minecraftRconService = new MinecraftRconService(
-//                    new RconDetails(rconUrl, rconPort, rconPassword),
-//                    ConnectOptions.defaults()
-//            );
-//            minecraftRconService.connectBlocking(Duration.ofSeconds(5));
-//            MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
-//            minecraftRcon.sendAsync(() -> "comfywl add " + discordUser.getNickname());
-//            WhiteListCommand whiteListCommand = new WhiteListCommand(Target.player(discordUser.getNickname()), WhiteListModes.ADD);
-//            minecraftRcon.sendAsync(whiteListCommand);
+            final MinecraftRconService minecraftRconService = new MinecraftRconService(
+                    new RconDetails(rconUrl, rconPort, rconPassword),
+                    ConnectOptions.defaults()
+            );
+            minecraftRconService.connectBlocking(Duration.ofSeconds(5));
+            MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
+            minecraftRcon.sendAsync(() -> "graylist add " + discordUser.getNickname());
 
         } else if (componentId.split("-")[0].equals("declined")) {
             System.out.println("Declined");

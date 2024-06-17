@@ -8,6 +8,10 @@ import dev.ua.ikeepcalm.data.entities.donatello.Donation;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
 import dev.ua.ikeepcalm.views.form.source.LauncherType;
+import io.graversen.minecraft.rcon.MinecraftRcon;
+import io.graversen.minecraft.rcon.service.ConnectOptions;
+import io.graversen.minecraft.rcon.service.MinecraftRconService;
+import io.graversen.minecraft.rcon.service.RconDetails;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -16,7 +20,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +30,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,35 +50,19 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
     @Value("${discord.journal-channel-id}")
     private long journalChannelId;
 
+    @Value("${minecraft.rcon}")
+    private String rconUrl;
+
+    @Value("${minecraft.port}")
+    private Integer rconPort;
+
+    @Value("${minecraft.password}")
+    private String rconPassword;
+
     public CommandsListener(DiscordUserService discordUserService) {
         this.discordUserService = discordUserService;
     }
 
-    @NotNull
-    private static EmbedBuilder getFormEmbed() {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Як пройти на сервер?");
-        embed.setColor(Color.YELLOW);
-        embed.setDescription("Вітаю, поціновувач майнкрафту! Для того, щоб отримати прохідку (дозвіл грати на нашому сервері) і \n" +
-                             "вже безпосередньо зайти на нього за загальним айпі (uaproject.xyz), у тебе є два шляхи:");
-        embed.addField("1. Придбати допуск за 50₴", "Все, що вам треба зробити для цього, натиснути на відповідну кнопку під цим повідомленням, вказати у полі Ім'я ваш дійсний ігровий нікнейм, обрати суму, що дорівнює, або перевищує 50₴. Ваш нікнейм буде додано до білого списку серверу майже моментально.", false);
-        embed.addField("2. Заповнити анкету", "Для того, щоб заповнити анкету вам потрібно натиснути на кнопку під цим повідомленням, уважно прочитати кожне питання, написати розгорнуту відповідь, надіслати, і чекати, поки адміністрація перевірить її. Результат анкети ви отримаєте у приватних повідомленнях. Уважно передивіться правила перед цим варіантом! У вас є лише одна спроба.", false);
-        embed.setImage("https://media.discordapp.net/attachments/1155135359265546392/1155135375329738824/vitania.png?ex=6623c4a6&is=66114fa6&hm=cb1f02603525bc12e4f2db9d72e34da2816534b197e4bae9ddef2acd50a7aea4&=&format=webp&quality=lossless&width=1440&height=450");
-        return embed;
-    }
-
-    @NotNull
-    private static EmbedBuilder getLaunchersEmbed() {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Інфо-блок про лаунчери");
-        embed.setColor(Color.ORANGE);
-        embed.setDescription("Пункт правил 1.4 свідчить: Використання будь-яких російських лаунчерів гри - категорично заборонено. Постає питання: які лаунчери тоді можна використовувати?");
-        embed.addField("PollyMc", "Гарний лаунчер для гри із підтримкою неофіціальних акаунтів. Зручний, має підтримку збірок з Modrinth, CurseForge, FTB; не потребує багато ресурсів від комп'ютера, можна встановити на будь яку систему ( macOS, Windows, Linux ). Ви можете завантажити його за посиланням: [PollyMc](https://pollymc.com)", false);
-        embed.addField("PrismLauncher ", "Гарний лаунчер для гри лише для ліцензійних акаунтів! Покращена версія PollyMc, підтримує багато різних ОС, має підтримку збірок з різних сайтів [Prism Launcher](https://prismlauncher.org)", false);
-        embed.addField("SKLauncher", "Альтернатива PollyMc, підтримує обидва варіанти акаунтів (ліцензійні і неліцензійні), не потребує багато ресурсів, має підтримку різних платформ, встановлення модпаків із різних ресурсів [SKLauncher](https://skmedix.pl)", false);
-        embed.setImage("https://skmedix.pl/images/social.jpg");
-        return embed;
-    }
 
     private Donatello performRequest() throws URISyntaxException, IOException, InterruptedException {
         URI url = new URI("https://donatello.to/api/v1/donates");
@@ -123,7 +111,7 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
             case "ping" -> event.reply("Pong!").queue();
 
             case "form" -> {
-                EmbedBuilder embed = getFormEmbed();
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getFormEmbed();
                 Button buy = Button.link("https://donatello.to/fyzzzen?a=50&c=&m=Graylist", "Придбати допуск \uD83D\uDCB5");
                 Button form = Button.link("https://uaproject.xyz/form", "Заповнити анкету \uD83D\uDCDD");
                 event.replyEmbeds(embed.build())
@@ -132,13 +120,36 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
             }
 
             case "launchers" -> {
-                EmbedBuilder embed = getLaunchersEmbed();
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getFormEmbed();
                 Button polymc = Button.link("https://github.com/fn2006/PollyMC/releases/download/8.0/PollyMC-Windows-MSVC-Setup-8.0.exe", "PollyMc");
                 Button sklauncher = Button.link("https://skmedix.pl", "SKLauncher");
                 event.replyEmbeds(embed.build())
                         .addActionRow(polymc, sklauncher)
                         .queue();
 
+            }
+
+            case "eta" -> {
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getEstimatedArrivalTimeEmbed();
+                event.replyEmbeds(embed.build()).queue();
+            }
+
+            case "graylist" -> {
+                event.deferReply().queue();
+                List<DiscordUser> users = discordUserService.findAll();
+                final MinecraftRconService minecraftRconService = new MinecraftRconService(
+                        new RconDetails(rconUrl, rconPort, rconPassword),
+                        ConnectOptions.defaults()
+                );
+
+                for (DiscordUser user : users) {
+                    if (user.isWasApproved()) {
+                        minecraftRconService.connectBlocking(Duration.ofSeconds(5));
+                        MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
+                        minecraftRcon.sendAsync(() -> "graylist add " + user.getNickname());
+                    }
+                }
+                event.getHook().sendMessage("Graylist updated!").queue();
             }
 
             case "forgive" -> {
@@ -174,7 +185,8 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                                     Member member = guild.retrieveMemberById(user.getDiscordId()).complete();
                                     guild.addRoleToMember(member, Objects.requireNonNull(guild.getRoleById(1221552838807654456L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
                                     guild.removeRoleFromMember(member, Objects.requireNonNull(guild.getRoleById(1221885602690240532L))).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
-                                } catch (ErrorResponseException ignored) {}
+                                } catch (ErrorResponseException ignored) {
+                                }
                             }
                         });
                         event.getHook().sendMessage("Roles synced!").queue();
@@ -190,7 +202,8 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                                 try {
                                     Member member = guild.retrieveMemberById(user.getDiscordId()).complete();
                                     event.getGuild().modifyNickname(member, user.getNickname()).queueAfter(2, java.util.concurrent.TimeUnit.SECONDS);
-                                } catch (ErrorResponseException ignored) {}
+                                } catch (ErrorResponseException ignored) {
+                                }
                             }
                         });
                         event.getHook().sendMessage("Nicknames synced!").queue();

@@ -65,6 +65,9 @@ public class Configuration {
                 Commands.slash("ping", "Replies with a pong!"),
                 Commands.slash("form", "Shows the form and the donation link").setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("launchers", "Shows information about the launchers"),
+                Commands.slash("eta", "Shows the estimated time of arrival for the server"),
+                Commands.slash("graylist", "Updates the server graylist")
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("sync", "Synchronize linked data").addOptions(
                         new OptionData(OptionType.STRING, "type", "Which data to synchronize")
                                 .addChoice("Nicknames", "nicknames")
