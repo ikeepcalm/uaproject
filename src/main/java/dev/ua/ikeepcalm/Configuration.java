@@ -66,6 +66,8 @@ public class Configuration {
                 Commands.slash("form", "Shows the form and the donation link").setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("launchers", "Shows information about the launchers"),
                 Commands.slash("eta", "Shows the estimated time of arrival for the server"),
+                Commands.slash("offtop", "Shows the offtop message"),
+                Commands.slash("violation", "Shows the message for reporting violations"),
                 Commands.slash("graylist", "Updates the server graylist")
                         .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("sync", "Synchronize linked data").addOptions(

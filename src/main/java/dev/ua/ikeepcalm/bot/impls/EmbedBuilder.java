@@ -41,4 +41,33 @@ public class EmbedBuilder {
         embed.addField("(c) Папер", "Оновлення для Paper не мають жодних термінів виходу, ніколи. Будь-які оновлення з'являться тоді, коли будуть готові, і єдине, що вам залишається - терпляче чекати на них разом з усіма іншими", false);
         return embed;
     }
+
+    @NotNull
+    public static net.dv8tion.jda.api.EmbedBuilder getOfftopEmbed() {
+        net.dv8tion.jda.api.EmbedBuilder embed = new net.dv8tion.jda.api.EmbedBuilder();
+        embed.setTitle("**Це НЕ канал для запитань!**");
+        embed.setColor(Color.cyan);
+        embed.setDescription("Тікети призначені для вирішення приватних проблем - проблем, які можуть містити приватні дані гравця, що звернувся за допомогою; проблем, які безпосередньо стосуються техніних несправностей серверу. Для запитань використовуйте <#1221862007251271740>!");
+        embed.addField("Корисна інформація відносно проблем", """
+                [Відразу переходьте до суті!](https://nometa.xyz/uk.html)
+                [Описуйте проблему, а не бажане вирішення!](https://xyproblem.info/)
+                """, false);
+        embed.setImage("https://alexandrageese.eu/wp-content/uploads/Google-Grafik.png");
+        return embed;
+    }
+
+    @NotNull
+    public static net.dv8tion.jda.api.EmbedBuilder getMi9HelpEmbed() {
+        net.dv8tion.jda.api.EmbedBuilder embed = new net.dv8tion.jda.api.EmbedBuilder();
+        embed.setTitle("Ви стали свідком порушення правил?");
+        embed.setColor(Color.CYAN);
+        embed.setDescription("Ми вам обов'язково допоможемо! Але для цього нам потрібно зібрати необхідну інформацію. Заповніть форму, яка наведена нижче, і ми обов'язково розглянемо вашу скаргу!");
+        embed.addField("1. Ваш ігровий нікнейм", "Ваш нікнейм на сервері", false);
+        embed.addField("2. Ігровий нікнейм порушника", "Нікнейм гравця, який порушив правила", false);
+        embed.addField("3. Скріншоти / докази", "Скріншоти або відео, які підтверджують порушення", false);
+        embed.addField("4. Пункт порушення / Опис", "Пункт порушення / опис порушення, яке ви побачили", false);
+        embed.addField("5. Координати (якщо є)", "Координати місця події. Щоб ми знали де шукати!", false);
+        embed.setImage("https://uaproject.xyz/images/mi9.jpg");
+        return embed;
+    }
 }

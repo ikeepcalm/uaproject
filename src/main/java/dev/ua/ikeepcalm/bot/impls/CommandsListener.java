@@ -120,7 +120,7 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
             }
 
             case "launchers" -> {
-                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getFormEmbed();
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getLaunchersEmbed();
                 Button polymc = Button.link("https://github.com/fn2006/PollyMC/releases/download/8.0/PollyMC-Windows-MSVC-Setup-8.0.exe", "PollyMc");
                 Button sklauncher = Button.link("https://skmedix.pl", "SKLauncher");
                 event.replyEmbeds(embed.build())
@@ -131,6 +131,16 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
 
             case "eta" -> {
                 EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getEstimatedArrivalTimeEmbed();
+                event.replyEmbeds(embed.build()).queue();
+            }
+
+            case "offtop" -> {
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getOfftopEmbed();
+                event.replyEmbeds(embed.build()).queue();
+            }
+
+            case "violation" -> {
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getMi9HelpEmbed();
                 event.replyEmbeds(embed.build()).queue();
             }
 
