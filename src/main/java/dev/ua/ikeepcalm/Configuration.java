@@ -68,6 +68,7 @@ public class Configuration {
                 Commands.slash("eta", "Shows the estimated time of arrival for the server"),
                 Commands.slash("offtop", "Shows the offtop message"),
                 Commands.slash("violation", "Shows the message for reporting violations"),
+                Commands.slash("bugreport", "Shows the message for reporting bugs"),
                 Commands.slash("graylist", "Updates the server graylist")
                         .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("sync", "Synchronize linked data").addOptions(

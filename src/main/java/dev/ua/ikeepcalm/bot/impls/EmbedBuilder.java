@@ -70,4 +70,19 @@ public class EmbedBuilder {
         embed.setImage("https://uaproject.xyz/images/mi9.jpg");
         return embed;
     }
+
+    @NotNull
+    public static net.dv8tion.jda.api.EmbedBuilder getBugReportEmbed() {
+        net.dv8tion.jda.api.EmbedBuilder embed = new net.dv8tion.jda.api.EmbedBuilder();
+        embed.setTitle("Форма звіту про помилку");
+        embed.setColor(Color.getHSBColor(257.344f, 55.7315f, 93));
+        embed.setDescription("Знайшли технічну несправність? Заповніть форму, яка наведена нижче, і ми обов'язково виправимо її!");
+        embed.addField("1. Яку версію гри ви використовуєте?", "Вкажіть вашу версію гри, завантажувач модів (Forge, Fabric, NeoForge, etc.), встановлені модифікації, тощо", false);
+        embed.addField("2. Поясніть суть технічної помилки", "В чому полягає проблема, з якою ви зустрілися? Яким чином вона впливає на ігровий процес?", false);
+        embed.addField("3. Як ми можемо відтворити помилку?", "Опишіть порядок дій, яки ви робили, що привело вас до зустрічі із помилкою, щоб ми могли відтворити її самостійно", false);
+        embed.addField("4. Прикріпіть лог файли", "Якщо ваша помилка стосується клієнту, прикріпіть сюди лог-файли гри (зазвичай знаходиться у теці із грою)", false);
+        embed.addField("5. Прикріпіть скріншоти / відео-докази", "Ви змогли записати помилку на відео, чи можете прикріпити скріншоти, що підтверджують її? Додайте його до свого повідомлення", false);
+        embed.setImage("https://www.applause.com/wp-content/uploads/GettyImages-1281034045-scaled.jpg");
+        return embed;
+    }
 }

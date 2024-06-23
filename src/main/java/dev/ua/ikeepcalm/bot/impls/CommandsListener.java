@@ -134,6 +134,11 @@ public class CommandsListener extends ListenerAdapter implements EventDispatcher
                 event.replyEmbeds(embed.build()).queue();
             }
 
+            case "bugreport" -> {
+                EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getBugReportEmbed();
+                event.replyEmbeds(embed.build()).queue();
+            }
+
             case "offtop" -> {
                 EmbedBuilder embed = dev.ua.ikeepcalm.bot.impls.EmbedBuilder.getOfftopEmbed();
                 event.replyEmbeds(embed.build()).queue();

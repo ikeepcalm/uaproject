@@ -10,7 +10,6 @@ import com.vaadin.flow.component.datepicker.DatePickerVariant;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -82,14 +81,13 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         gameLauncher.addThemeVariants(SelectVariant.LUMO_HELPER_ABOVE_FIELD);
 
         TextField otherLauncher = new TextField();
-        otherLauncher.setPlaceholder("ex. Badlion, Lunar, etc.");
+        otherLauncher.setPlaceholder("Badlion, Lunar, etc.");
         otherLauncher.addThemeVariants(TextFieldVariant.LUMO_HELPER_ABOVE_FIELD);
         otherLauncher.setHelperText("Вкажіть назву іншого лаунчера");
         otherLauncher.setWidth("100%");
         gameLauncher.setHelperText("Вкажіть назву іншого лаунчера");
 
         gameLauncher.addValueChangeListener(event -> {
-            System.out.println(event.toString());
             if (gameLauncher.getValue().value() == LauncherType.OTHER) {
                 customLauncher = true;
                 verticalLayout.addComponentAtIndex(3, otherLauncher);
@@ -123,12 +121,12 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         description.setWidth("100%");
         formLayout.setWidth("100%");
         nickname.setHelperText("Ваш ігровий нікнейм (для грейлісту)");
-        nickname.setPlaceholder("ex. Player123");
+        nickname.setPlaceholder("Player123");
         birthDate.setHelperText("Ваша дата народження");
         advised.setHelperText("Звідки ви дізналися про наш сервер?");
-        advised.setPlaceholder("ex. Друзі, реклама, пошукові системи, тощо");
+        advised.setPlaceholder("Друзі, реклама, пошукові системи, тощо");
         hobbies.setHelperText("Які у вас є хоббі, чим ви займаєтесь у вільний час?");
-        hobbies.setPlaceholder("ex. Читання, гра в ігри, спорт, тощо");
+        hobbies.setPlaceholder("Читання, гра в ігри, спорт, тощо");
         typeOfPlayer.setHelperText("Хто ви за типом гравця в майнкрафті?");
         typeOfPlayer.setWidth("min-content");
         setPlayerTypeData(typeOfPlayer);
@@ -137,18 +135,18 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
         setLaunchersData(gameLauncher);
         task.setHelperText(
                 "Для того, щоб викопати яму, трьом чоловікам потрібно 5 годин. Скільки часу потрібно восьми чоловікам? Відповідь обґрунтуйте :)");
-        task.setPlaceholder("ex. Ділимо кількість мавпочок на кількість бананів: 90/3 = 30 хвилин, щоб з'їсти один банан...");
+        task.setPlaceholder("Ділимо кількість мавпочок на кількість бананів: 90/3 = 30 хвилин, щоб з'їсти один банан...");
         task.setWidth("100%");
         experience.setHelperText("У вас є досвід гри на приватних майнкрафт серверах? Опишіть його якомога детальніше!");
-        experience.setPlaceholder("ex. Я грав на сервері з 2015 року, володію знаннями у плагінах, вмію будувати, тощо");
+        experience.setPlaceholder("Я грав на сервері з 2015 року, володію знаннями у плагінах, вмію будувати, тощо");
         experience.setWidth("100%");
         conflict.setHelperText(
                 "Уявіть, що вас ображає адміністратор серверу. Що ви зробите, якщо потрапите у таку ситуацію?");
-        conflict.setPlaceholder("ex. Звернуся до іншого адміністратора, напишу на форумі, тощо");
+        conflict.setPlaceholder("Звернуся до іншого адміністратора, напишу на форумі, тощо");
         conflict.setWidth("100%");
         memory.setHelperText(
                 "Опишіть ваш улюблений спогад із дитинства :'");
-        memory.setPlaceholder("ex. Як я вперше побачив сніг, як я вперше побачив море, тощо");
+        memory.setPlaceholder("Як я вперше побачив сніг, як я вперше побачив море, тощо");
         memory.setWidth("100%");
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
@@ -223,6 +221,27 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
             }
 
             if (!valid) {
+                return;
+            }
+
+            Optional<DiscordUser> verify = service.findByDiscordId(currentPerson.getDiscordId());
+            if (verify.isEmpty()) {
+                return;
+            }
+            if (verify.get().isAlreadyTried()) {
+                ConfirmDialog dialog = new ConfirmDialog();
+                dialog.setHeader("Помилка! Анкета з цього акаунту вже існує!");
+                dialog.setText("Якщо ви вважаєте, що це помилка, перезайдіть на цю сторінку, і авторизуйтеся за допомогою свого Discord акаунту!");
+                dialog.setConfirmText("Закрити");
+                dialog.addConfirmListener(e -> {
+                    dialog.close();
+                    UI.getCurrent().navigate("");
+                });
+                dialog.addCancelListener(e -> {
+                    dialog.close();
+                    UI.getCurrent().navigate("/form");
+                });
+                dialog.open();
                 return;
             }
 

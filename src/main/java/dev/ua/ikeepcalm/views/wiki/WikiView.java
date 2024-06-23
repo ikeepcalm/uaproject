@@ -64,7 +64,7 @@ public class WikiView extends VerticalLayout {
                 - Не панікувати! Все під контролем
                 - Визначити місце смерті. Прямувати туди
                 - Орієнтуватися на білий ореол з частиць
-                
+                                
                 На місці смерті буде видно світловий стовп, це - ваша душа. Вона існує не більше не менше 60 хвилин. Щоб забрати свої речі, і відновити певний рівень досвіду, просто підійдіть до неї
                 """));
         featuresQuestions.addQuestion(new WikiCard("Прискорення на доріжках. Як це працює?", "Ваш персонаж рухається швидше на протоптаних доріжках, які, наприклад, можна знайти нативно згенерованими у селах"));
@@ -72,13 +72,21 @@ public class WikiView extends VerticalLayout {
         featuresQuestions.addQuestion(new WikiCard("Як створити платівку із власною музикою?", "Вам знадобиться платівка, яку маєте тримати у руках; пряме посилання (якщо перейти на нього, відразу починається завантаження файлу) на пісню, яку ви хочете записати і 1 Аур у інвентарі. Команда для запису: /disc <посилання> <назва файлу із .mp3 / .wav у кінці> <\"Власний опис платівки\"> "));
         featuresQuestions.addQuestion(new WikiCard("Чому я не бачу всю мапу серверу на онлайн мапі?", "Щоб уникнути сварок щодо незайманої і невідкритої території на мапі, мапа серверу залишається у 'тумані війни' до тих пір, поки ви не запишете бажану ділянку на ігрову мапу, і виконаєте команду /bmdiscover із нею у руці. Що більше охоплена територія, тим більше відкрита ділянка!", "images/map.png"));
 
+        WikiGroup townyQuestions = new WikiGroup("Управління містами");
+        townyQuestions.addQuestion(new WikiCard("Як створити своє місто?", "Для створення міста вам потрібно мати активну Wealth підписку (див. Wealth підписки). Після цього ви можете виконати команду /t new <назва міста> | /t create <назва міста>"));
+        townyQuestions.addQuestion(new WikiCard("Як додати (видалити) гравця до (з) міста?", "Щоб запросити іншого гравця у своє місто вам потрібно виконати команду /t invite <нікнейм гравця>. Якщо ви хочете вийти з міста, використовуйте /t leave. Якщо ви хочете видалити гравця з свого міста, використовуйте /t kick <нікнейм гравця>"));
+        townyQuestions.addQuestion(new WikiCard("Як встановити кордони свого міста?", "Кордони міста встановлюються в ручному режимі мером. Увесь світ поділений на багато частинок 16х16 (чанків). Чанк, у якому було створено місто вважається центральним. Щоб розширити територію міста, мер може обрати будь-який з прилеглих чанків, переміститися фізично до нього і виконати команду /t claim. Щоб видалити чанк з території міста, виконайте команду /t unclaim. Кількість чанків обмежена кількістю гравців у місті, а також кількістю блоків вказаною у описі Wealth підписки"));
+        townyQuestions.addQuestion(new WikiCard("Де я можу подивитися список усіх команд?", "Ви можете подивитися список усіх команд Towny, виконавши команду /t help. Якщо вас цікавить більш детальний опис плагіну, тут ви можете почитати про нього: https://wiki.ccnetmc.com/Guides/TownyPlugin"));
+        townyQuestions.addQuestion(new WikiCard("Моє місто хоче розпочати війну. Це можливо?", "В концепті - так. Для цього у вашого міста, і міста, якому ви хочете об'явити війну мають мати НЕ нейтральні статуси. Під час війни більшість функції міста будуть заблоковані, а переможець зможе забрати собі частину територій. Щоб дізнатися детальніше, чекайте на оновлення сервера у нашому Discord сервері!"));
+        townyQuestions.addQuestion(new WikiCard("Що станеться з моїм містом, якщо у мене закінчиться спонсорська підписка?", "З моменту втрати мером спонсорської підписки, місто буде переведено у статус очікування строком два тижні. Якщо протягом цього часу мер не відновить підписку, місто буде розформовано, територія звільнена, а усі жителі видалені з нього"));
+
         FlexLayout cardLayout = new FlexLayout();
         cardLayout.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         cardLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         cardLayout.setWidthFull();
         cardLayout.addClassName(LumoUtility.Margin.Bottom.SMALL);
 
-        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions, economyQuestions, featuresQuestions)) {
+        for (WikiGroup group : List.of(generalQuestions, rolesQuestions, guestQuestions, wealthQuestions, economyQuestions, featuresQuestions, townyQuestions)) {
             Div content = new Div();
             content.addClassNames(LumoUtility.FlexWrap.WRAP, LumoUtility.Overflow.HIDDEN, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN, LumoUtility.AlignItems.START, LumoUtility.Width.FULL);
             H2 header = new H2(group.getHeader());
