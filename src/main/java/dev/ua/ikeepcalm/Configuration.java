@@ -69,6 +69,13 @@ public class Configuration {
                 Commands.slash("offtop", "Shows the offtop message"),
                 Commands.slash("violation", "Shows the message for reporting violations"),
                 Commands.slash("bugreport", "Shows the message for reporting bugs"),
+                Commands.slash("vote", "Vote for the random user from the same server").addOptions(
+                        new OptionData(OptionType.USER, "user", "The user to vote for").setRequired(true)
+                ),
+                Commands.slash("results", "Shows the results of the vote")
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
+                Commands.slash("reset", "Resets the vote results")
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("graylist", "Updates the server graylist")
                         .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL, Permission.MODERATE_MEMBERS)),
                 Commands.slash("sync", "Synchronize linked data").addOptions(
