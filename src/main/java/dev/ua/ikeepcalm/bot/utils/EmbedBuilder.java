@@ -38,7 +38,8 @@ public class EmbedBuilder {
         embed.setTitle("**Ми нічого не можемо обіцяти!**");
         embed.setColor(Color.CYAN);
         embed.setDescription("Сервер цілком і повністю залежить від виходу програмного забезпечення для запуску сервера. Ми не можемо вплинути на цей процес, тому не можемо обіцяти точний час відкриття сервера");
-        embed.addField("(c) Папер", "Оновлення для Paper не мають жодних термінів виходу, ніколи. Будь-які оновлення з'являться тоді, коли будуть готові, і єдине, що вам залишається - терпляче чекати на них разом з усіма іншими", false);
+        embed.addField("(c) Paper", "Оновлення для Paper не мають жодних термінів виходу, ніколи. Будь-які оновлення з'являться тоді, коли будуть готові, і єдине, що вам залишається - терпляче чекати на них разом з усіма іншими", false);
+        embed.addField("На що ми ще очікуємо?", "[Патчі продуктивності серверу](https://github.com/PaperMC/Paper/tree/master/patches/unapplied/server)\n[Зміни від першоджерела Spigot](https://www.spigotmc.org/threads/spigot-bungeecord-1-21.650824/#post-4740590)", false);
         return embed;
     }
 
@@ -48,11 +49,6 @@ public class EmbedBuilder {
         embed.setTitle("**Це НЕ канал для запитань!**");
         embed.setColor(Color.cyan);
         embed.setDescription("Тікети призначені для вирішення приватних проблем - проблем, які можуть містити приватні дані гравця, що звернувся за допомогою; проблем, які безпосередньо стосуються техніних несправностей серверу. Для запитань використовуйте <#1221862007251271740>!");
-        embed.addField("Корисна інформація відносно проблем", """
-                [Відразу переходьте до суті!](https://nometa.xyz/uk.html)
-                [Описуйте проблему, а не бажане вирішення!](https://xyproblem.info/)
-                """, false);
-        embed.setImage("https://alexandrageese.eu/wp-content/uploads/Google-Grafik.png");
         return embed;
     }
 
