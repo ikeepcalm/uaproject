@@ -2,10 +2,13 @@ package dev.ua.ikeepcalm.bot.commands;
 
 import dev.ua.ikeepcalm.bot.EventDispatcher;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.springframework.stereotype.Component;
+
+import static dev.ua.ikeepcalm.bot.utils.EmbedBuilder.getMi9HelpEmbed;
 
 @Component
 public class TemplateCommands extends ListenerAdapter implements EventDispatcher {
@@ -50,8 +53,17 @@ public class TemplateCommands extends ListenerAdapter implements EventDispatcher
             }
 
             case "violation" -> {
-                EmbedBuilder embed = dev.ua.ikeepcalm.bot.utils.EmbedBuilder.getMi9HelpEmbed();
-                event.replyEmbeds(embed.build()).queue();
+                Role role = event.getGuild().getRoleById(1221552838916706307L);
+
+                if (role == null) {
+                    event.reply("Role to ping not found! Contact the administrator!").setEphemeral(true).queue();
+                    return;
+                }
+
+                EmbedBuilder embed = getMi9HelpEmbed();
+                event.reply(role.getAsMention() + "\n")
+                        .addEmbeds(embed.build())
+                        .queue();
             }
         }
     }

@@ -63,16 +63,16 @@ public class AdminCommands extends ListenerAdapter implements EventDispatcher {
                 event.deferReply().queue();
                 Member member = Objects.requireNonNull(event.getOption("user")).getAsMember();
                 String reason = Objects.requireNonNull(event.getOption("reason")).getAsString();
-                int minutes;
+                long minutes;
 
                 try {
-                    minutes = Integer.parseInt(event.getOption("duration").getAsString());
+                    minutes = parseDuration(event.getOption("duration").getAsString());
                 } catch (NumberFormatException e) {
                     event.getHook().sendMessage("Invalid duration! Consider using d, m, s!").queue();
                     return;
                 }
 
-                Objects.requireNonNull(event.getGuild()).ban(member, minutes, TimeUnit.MINUTES).queue();
+                Objects.requireNonNull(event.getGuild()).ban(member, (int) minutes, TimeUnit.MINUTES).queue();
                 event.getHook().sendMessage("User was banned!").queue();
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setTitle("Доказ бану");
