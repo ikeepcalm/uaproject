@@ -1,29 +1,28 @@
 package dev.ua.ikeepcalm.bot.listeners;
 
+import com.github.t9t.minecraftrconclient.RconClient;
 import dev.ua.ikeepcalm.bot.EventDispatcher;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
-import io.graversen.minecraft.rcon.MinecraftRcon;
-import io.graversen.minecraft.rcon.service.ConnectOptions;
-import io.graversen.minecraft.rcon.service.MinecraftRconService;
-import io.graversen.minecraft.rcon.service.RconDetails;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
-import java.time.Duration;
 import java.util.Optional;
 
 @Component
 public class FormsListener extends ListenerAdapter implements EventDispatcher {
 
+    private static final Logger log = LoggerFactory.getLogger(FormsListener.class);
     private final DiscordUserService discordUserService;
 
     @Value("${minecraft.rcon}")
@@ -95,13 +94,11 @@ public class FormsListener extends ListenerAdapter implements EventDispatcher {
 
             new ResponseUtil(fallbackChannelId, null).sendSuccessMessage(Long.parseLong(discordUser.getDiscordId()), event.getJDA());
 
-            final MinecraftRconService minecraftRconService = new MinecraftRconService(
-                    new RconDetails(rconUrl, rconPort, rconPassword),
-                    ConnectOptions.defaults()
-            );
-            minecraftRconService.connectBlocking(Duration.ofSeconds(5));
-            MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
-            minecraftRcon.sendAsync(() -> "graylist add " + discordUser.getNickname());
+            try (RconClient client = RconClient.open(rconUrl, rconPort, rconPassword)) {
+                client.sendCommand("graylist add " + discordUser.getNickname());
+            } catch (Exception e) {
+                log.error("Error while sending command to Minecraft server", e);
+            }
 
         } else if (componentId.split("-")[0].equals("declined")) {
             System.out.println("Declined");

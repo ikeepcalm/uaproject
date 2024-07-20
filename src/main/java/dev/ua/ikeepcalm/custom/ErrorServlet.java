@@ -9,14 +9,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @WebServlet
-public class AssetsServlet extends HttpServlet {
+public class ErrorServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        String requestedFile = request.getPathInfo();
-        String resourcePath;
-        resourcePath = "/META-INF/resources/custom/home/assets" + requestedFile;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String resourcePath = "/META-INF/resources/custom/404.html";
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {
@@ -24,10 +23,8 @@ public class AssetsServlet extends HttpServlet {
                 return;
             }
             String mimeType = getServletContext().getMimeType(resourcePath);
-            response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
+            response.setContentType(mimeType != null ? mimeType : "text/html");
             resourceStream.transferTo(response.getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

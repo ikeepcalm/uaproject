@@ -14,7 +14,16 @@ public class WikiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String resourcePath = "/META-INF/resources/custom/index.html";
+        String resourcePath;
+        if (request.getPathInfo() == null) {
+            resourcePath = "/META-INF/resources/custom/wiki/index.html";
+        } else {
+            String path = request.getPathInfo();
+            if (!path.endsWith("/")) {
+                path += "/";
+            }
+            resourcePath = "/META-INF/resources/custom/wiki/wiki" + path + "index.html";
+        }
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {

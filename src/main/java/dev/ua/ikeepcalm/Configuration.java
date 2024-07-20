@@ -1,8 +1,7 @@
 package dev.ua.ikeepcalm;
 
 import dev.ua.ikeepcalm.bot.EventDispatcher;
-import dev.ua.ikeepcalm.custom.AssetsServlet;
-import dev.ua.ikeepcalm.custom.HomeServlet;
+import dev.ua.ikeepcalm.custom.*;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.views.login.LoginServlet;
 import net.dv8tion.jda.api.JDA;
@@ -49,8 +48,36 @@ public class Configuration {
     }
 
     @Bean
+    public ServletRegistrationBean<FaviconServlet> faviconServletServletRegistrationBean() {
+        ServletRegistrationBean<FaviconServlet> bean = new ServletRegistrationBean<>(new FaviconServlet(), "/favicon.svg");
+        bean.setLoadOnStartup(1);
+        return bean;
+    }
+
+    @Bean
     public ServletRegistrationBean<HomeServlet> homeServletRegistrationBean() {
         ServletRegistrationBean<HomeServlet> bean = new ServletRegistrationBean<>(new HomeServlet(), "/home");
+        bean.setLoadOnStartup(1);
+        return bean;
+    }
+
+    @Bean
+    public ServletRegistrationBean<WikiServlet> wikiServletRegistrationBean() {
+        ServletRegistrationBean<WikiServlet> bean = new ServletRegistrationBean<>(new WikiServlet(), "/wiki/*");
+        bean.setLoadOnStartup(1);
+        return bean;
+    }
+
+    @Bean
+    public ServletRegistrationBean<AstroServlet> astroServletRegistrationBean() {
+        ServletRegistrationBean<AstroServlet> bean = new ServletRegistrationBean<>(new AstroServlet(), "/_astro/*", "/pagefind/*");
+        bean.setLoadOnStartup(1);
+        return bean;
+    }
+
+    @Bean
+    public ServletRegistrationBean<ErrorServlet> errorServletServletRegistrationBean() {
+        ServletRegistrationBean<ErrorServlet> bean = new ServletRegistrationBean<>(new ErrorServlet(), "/error");
         bean.setLoadOnStartup(1);
         return bean;
     }

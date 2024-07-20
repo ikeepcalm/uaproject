@@ -1,5 +1,6 @@
 package dev.ua.ikeepcalm.bot.commands;
 
+import com.github.t9t.minecraftrconclient.RconClient;
 import com.google.gson.Gson;
 import dev.ua.ikeepcalm.bot.EventDispatcher;
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
@@ -8,19 +9,11 @@ import dev.ua.ikeepcalm.data.entities.donatello.Donation;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
 import dev.ua.ikeepcalm.views.form.source.LauncherType;
-import io.graversen.minecraft.rcon.MinecraftRcon;
-import io.graversen.minecraft.rcon.service.ConnectOptions;
-import io.graversen.minecraft.rcon.service.MinecraftRconService;
-import io.graversen.minecraft.rcon.service.RconDetails;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.text.TextInput;
-import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
-import net.dv8tion.jda.api.interactions.modals.Modal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +23,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,16 +72,12 @@ public class MinecraftCommands extends ListenerAdapter implements EventDispatche
             case "graylist" -> {
                 event.deferReply().queue();
                 List<DiscordUser> users = discordUserService.findAll();
-                final MinecraftRconService minecraftRconService = new MinecraftRconService(
-                        new RconDetails(rconUrl, rconPort, rconPassword),
-                        ConnectOptions.defaults()
-                );
 
                 for (DiscordUser user : users) {
                     if (user.isWasApproved()) {
-                        minecraftRconService.connectBlocking(Duration.ofSeconds(5));
-                        MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
-                        minecraftRcon.sendAsync(() -> "graylist add " + user.getNickname());
+                        try (RconClient client = RconClient.open(rconUrl, rconPort, rconPassword)) {
+                            client.sendCommand("graylist add " + user.getNickname());
+                        }
                     }
                 }
                 event.getHook().sendMessage("Graylist updated!").queue();

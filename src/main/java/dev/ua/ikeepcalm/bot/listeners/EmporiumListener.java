@@ -1,23 +1,22 @@
 package dev.ua.ikeepcalm.bot.listeners;
 
+import com.github.t9t.minecraftrconclient.RconClient;
 import dev.ua.ikeepcalm.bot.EventDispatcher;
-import io.graversen.minecraft.rcon.MinecraftRcon;
-import io.graversen.minecraft.rcon.service.ConnectOptions;
-import io.graversen.minecraft.rcon.service.MinecraftRconService;
-import io.graversen.minecraft.rcon.service.RconDetails;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
-import java.time.Duration;
 
 @Component
 public class EmporiumListener extends ListenerAdapter implements EventDispatcher {
 
+    private static final Logger log = LoggerFactory.getLogger(EmporiumListener.class);
     @Value("${minecraft.rcon}")
     private String rconUrl;
 
@@ -42,17 +41,15 @@ public class EmporiumListener extends ListenerAdapter implements EventDispatcher
                     return;
                 }
 
-                final MinecraftRconService minecraftRconService = new MinecraftRconService(
-                        new RconDetails(rconUrl, rconPort, rconPassword),
-                        ConnectOptions.defaults()
-                );
-
                 String nickname = componentId.split("-")[2];
                 String intValue = componentId.split("-")[3];
 
-                minecraftRconService.connectBlocking(Duration.ofSeconds(5));
-                MinecraftRcon minecraftRcon = minecraftRconService.minecraftRcon().orElseThrow(IllegalStateException::new);
-                minecraftRcon.sendAsync(() -> "emporium add " + nickname + " " + intValue);
+                try (RconClient client = RconClient.open(rconUrl, rconPort, rconPassword)) {
+                    client.sendCommand("emporium add " + nickname + " " + intValue);
+                } catch (Exception e) {
+                    log.error("Error while sending command to Minecraft server", e);
+                }
+
             } else if (componentId.split("-")[0].equals("declined")) {
                 EmbedBuilder embedBuilder = new EmbedBuilder(event.getMessage().getEmbeds().getFirst());
                 embedBuilder.setColor(Color.RED);

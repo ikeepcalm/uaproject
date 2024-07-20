@@ -14,7 +14,7 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String resourcePath = "/META-INF/resources/custom/index.html";
+        String resourcePath = "/META-INF/resources/custom/home/index.html";
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {

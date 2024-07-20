@@ -9,14 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @WebServlet
-public class AssetsServlet extends HttpServlet {
+public class FaviconServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        String requestedFile = request.getPathInfo();
-        String resourcePath;
-        resourcePath = "/META-INF/resources/custom/home/assets" + requestedFile;
+        String resourcePath = "/META-INF/resources/custom/wiki/favicon.svg";
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {

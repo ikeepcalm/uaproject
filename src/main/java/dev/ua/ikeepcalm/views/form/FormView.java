@@ -289,7 +289,7 @@ public class FormView extends Composite<VerticalLayout> implements BeforeEnterOb
 
         dialog.addConfirmListener(event -> {
             dialog.close();
-            UI.getCurrent().getPage().setLocation("https://discord.com/oauth2/authorize?client_id=1226236763975188550&response_type=code&redirect_uri=https%3A%2F%2Fuaproject-reborn.xyz%2Flogin%2Fcallback&scope=identify");
+            UI.getCurrent().getPage().setLocation("https://discord.com/oauth2/authorize?client_id=1226236763975188550&response_type=code&redirect_uri=https%3A%2F%2Fuaproject.xyz%2Flogin%2Fcallback&scope=identify");
         });
         dialog.addCancelListener(event -> {
             dialog.close();
