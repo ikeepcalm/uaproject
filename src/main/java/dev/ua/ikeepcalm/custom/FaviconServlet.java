@@ -14,7 +14,7 @@ public class FaviconServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        String resourcePath = "/META-INF/resources/custom/wiki/favicon.svg";
+        String resourcePath = "/META-INF/resources/custom/favicon.svg";
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {

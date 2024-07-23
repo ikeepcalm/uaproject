@@ -20,7 +20,7 @@ public class AstroServlet extends HttpServlet {
         }
         String requestedFile = request.getPathInfo();
         String path = request.getServletPath();
-        String resourcePath = "/META-INF/resources/custom/wiki" + path + requestedFile;
+        String resourcePath = "/META-INF/resources/custom" + path + requestedFile;
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
             if (resourceStream == null) {

@@ -50,8 +50,6 @@ public class MainLayout extends AppLayout {
     private ListItem[] createMenuItems() {
         return new ListItem[]{
                 new MenuItemInfo("Головна", LineAwesomeIcon.HOME_SOLID.create(), dev.ua.ikeepcalm.views.home.HomeView.class),
-                new MenuItemInfo("Механіки", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
-                new MenuItemInfo("Правила", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
                 new ExternalMenuItemInfo("Вікі", LineAwesomeIcon.WIKIPEDIA_W.create(), "https://uaproject.xyz/wiki/"),
                 new MenuItemInfo("Крамниця", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
                 new MenuItemInfo("Анкета", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),
@@ -63,8 +61,6 @@ public class MainLayout extends AppLayout {
     private ListItem[] createMenuIcons() {
         return new ListItem[]{
                 new MenuItemInfo("", LineAwesomeIcon.HOME_SOLID.create(), dev.ua.ikeepcalm.views.home.HomeView.class),
-                new MenuItemInfo("", LineAwesomeIcon.FEATHER_ALT_SOLID.create(), dev.ua.ikeepcalm.views.features.FeaturesView.class),
-                new MenuItemInfo("", LineAwesomeIcon.PAPERCLIP_SOLID.create(), dev.ua.ikeepcalm.views.rules.RulesView.class),
                 new ExternalMenuItemInfo("", LineAwesomeIcon.WIKIPEDIA_W.create(), "https://uaproject.xyz/wiki/"),
                 new MenuItemInfo("", LineAwesomeIcon.SHOPPING_BASKET_SOLID.create(), dev.ua.ikeepcalm.views.shop.ShopView.class),
                 new MenuItemInfo("", LineAwesomeIcon.PEN_ALT_SOLID.create(), dev.ua.ikeepcalm.views.form.FormView.class),

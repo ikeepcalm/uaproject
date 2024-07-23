@@ -22,7 +22,7 @@ public class WikiServlet extends HttpServlet {
             if (!path.endsWith("/")) {
                 path += "/";
             }
-            resourcePath = "/META-INF/resources/custom/wiki/wiki" + path + "index.html";
+            resourcePath = "/META-INF/resources/custom/wiki" + path + "index.html";
         }
 
         try (InputStream resourceStream = getClass().getResourceAsStream(resourcePath)) {
