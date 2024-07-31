@@ -8,7 +8,6 @@ import dev.ua.ikeepcalm.data.entities.donatello.Donatello;
 import dev.ua.ikeepcalm.data.entities.donatello.Donation;
 import dev.ua.ikeepcalm.data.services.DiscordUserService;
 import dev.ua.ikeepcalm.utils.ResponseUtil;
-import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -87,7 +86,7 @@ public class MinecraftCommands extends ListenerAdapter implements EventDispatche
                 event.deferReply().queue();
                 List<DiscordUser> users = discordUserService.findAll();
                 users.forEach(user -> {
-                    if (!user.isWasApproved() && (user.getGameLauncher() == LauncherType.TLAUNCHER || user.getGameLauncher() == LauncherType.TLAUNCHER_LEGACY || user.getGameLauncher() == LauncherType.KLAUNCHER)) {
+                    if (!user.isWasApproved() && (user.getGameLauncher().contains("tlauncher"))) {
                         Guild guild = event.getGuild();
                         Member member;
                         try {

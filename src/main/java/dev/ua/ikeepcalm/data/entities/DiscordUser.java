@@ -1,7 +1,5 @@
 package dev.ua.ikeepcalm.data.entities;
 
-import dev.ua.ikeepcalm.views.form.source.LauncherType;
-import dev.ua.ikeepcalm.views.form.source.PlayerType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -27,9 +25,9 @@ public class DiscordUser extends PersistentUser {
     @Column(columnDefinition = "TEXT")
     private String hobbies;
     @Column
-    private PlayerType typeOfPlayer;
+    private String typeOfPlayer;
     @Column
-    private LauncherType gameLauncher;
+    private String gameLauncher;
     @Column
     private String customLauncher;
     @Column(columnDefinition = "TEXT")

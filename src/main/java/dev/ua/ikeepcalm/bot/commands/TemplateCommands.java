@@ -21,7 +21,7 @@ public class TemplateCommands extends ListenerAdapter implements EventDispatcher
             case "form" -> {
                 EmbedBuilder embed = dev.ua.ikeepcalm.bot.utils.EmbedBuilder.getFormEmbed();
                 Button buy = Button.link("https://donatello.to/fyzzzen?a=50&c=&m=Graylist", "Придбати допуск \uD83D\uDCB5");
-                Button form = Button.link("https://uaproject.xyz/form", "Заповнити анкету \uD83D\uDCDD");
+                Button form = Button.link("https://www.uaproject.xyz/form", "Заповнити анкету \uD83D\uDCDD");
                 event.replyEmbeds(embed.build())
                         .addActionRow(buy, form)
                         .queue();

@@ -101,7 +101,6 @@ public class FormsListener extends ListenerAdapter implements EventDispatcher {
             }
 
         } else if (componentId.split("-")[0].equals("declined")) {
-            System.out.println("Declined");
             EmbedBuilder embedBuilder = new EmbedBuilder(event.getMessage().getEmbeds().getFirst());
             embedBuilder.setColor(Color.RED);
             discordUser.setWasApproved(false);

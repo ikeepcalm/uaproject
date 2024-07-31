@@ -1,7 +1,6 @@
 package dev.ua.ikeepcalm.utils;
 
 import dev.ua.ikeepcalm.data.entities.DiscordUser;
-import dev.ua.ikeepcalm.views.form.source.LauncherType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
@@ -47,48 +46,41 @@ public class ResponseUtil {
             embed.addField("Вік (Надто молодий)", "Гравцю наразі " + age + " роки(ів)", true);
         }
 
-        LauncherType launcherType = user.getGameLauncher();
-        if (launcherType == LauncherType.TLAUNCHER || launcherType == LauncherType.TLAUNCHER_LEGACY || launcherType == LauncherType.KLAUNCHER) {
-            embed.addField("Лаунчер (Російський)", launcherType.getLauncher(), true);
-        } else if (launcherType == LauncherType.OTHER) {
-            embed.addField("Лаунчер (Інший)", user.getCustomLauncher(), true);
-        } else {
-            embed.addField("Лаунчер (Нормальний)", launcherType.getLauncher(), true);
-        }
+        embed.addField("Лаунчер", user.getGameLauncher(), true);
 
-        embed.addField("Тип гравця", "Гравець найбільше асоціює себе із таким типом - " + user.getTypeOfPlayer().getType(), true);
+        embed.addField("Тип гравця", "Гравець найбільше асоціює себе із таким типом - " + user.getTypeOfPlayer(), true);
 
-        if (user.getAdvised().length() > 1024){
+        if (user.getAdvised().length() > 1024) {
             embed.addField("Звідки дізнався про нас", user.getAdvised().substring(0, 1024), true);
         } else {
             embed.addField("Звідки дізнався про нас", user.getAdvised(), true);
         }
 
-        if (user.getHobbies().length() > 1024){
+        if (user.getHobbies().length() > 1024) {
             embed.addField("Чим займається у вільний час", user.getHobbies().substring(0, 1024), false);
         } else {
             embed.addField("Чим займається у вільний час", user.getHobbies(), false);
         }
 
-        if (user.getExperience().length() > 1024){
+        if (user.getExperience().length() > 1024) {
             embed.addField("Досвід гри на інших серверах", user.getExperience().substring(0, 1024), true);
         } else {
             embed.addField("Досвід гри на інших серверах", user.getExperience(), true);
         }
 
-        if (user.getTask().length() > 1024){
+        if (user.getTask().length() > 1024) {
             embed.addField("Задачка зі школи (75 хвилин)", user.getTask().substring(0, 1024), true);
         } else {
             embed.addField("Задачка зі школи (75 хвилин)", user.getTask(), true);
         }
 
-        if (user.getConflict().length() > 1024){
+        if (user.getConflict().length() > 1024) {
             embed.addField("Конфліктна ситуація", user.getConflict().substring(0, 1024), false);
         } else {
             embed.addField("Конфліктна ситуація", user.getConflict(), false);
         }
 
-        if (user.getMemory().length() > 1024){
+        if (user.getMemory().length() > 1024) {
             embed.addField("Спогад із дитинства", user.getMemory().substring(0, 1024), false);
         } else {
             embed.addField("Спогад із дитинства", user.getMemory(), false);
@@ -150,7 +142,7 @@ public class ResponseUtil {
     public void sendForgiveMessage(long userId, JDA jda) {
         User user = jda.retrieveUserById(userId).complete();
         EmbedBuilder declined = getForgiveEmbed();
-        Button form = Button.link("https://uaproject.xyz/form", "Подати анкету знову \uD83D\uDCB5");
+        Button form = Button.link("https://www.uaproject.xyz/form", "Подати анкету знову \uD83D\uDCB5");
 
         user.openPrivateChannel()
                 .flatMap(channel -> channel.sendMessageEmbeds(declined.build()))
@@ -179,7 +171,7 @@ public class ResponseUtil {
         success.setDescription("""
                 👋 Вітаю! Ваша анкета щойно була перевірена адміністрацією UAProject.
                                 
-                🙃 З радістю повідомляю Вам, що **ви пройшли перевірку, і вашу анкету було прийнято!** Якщо ви правильно вказали нікнейм, ви вже можете зайти на сервер за загальним айпі **(uaproject.xyz)**. Якщо ви раніше вже заходили у режимі гостя, не хвилюйтеся, ви вже мали отримати допуск на гру!
+                🙃 З радістю повідомляю Вам, що **ви пройшли перевірку, і вашу анкету було прийнято!** Якщо ви правильно вказали нікнейм, ви вже можете зайти на сервер за загальним айпі **(mc.uaproject.xyz)**. Якщо ви раніше вже заходили у режимі гостя, не хвилюйтеся, ви вже мали отримати допуск на гру!
                                 
                 Рекомендую вам **ознайомитися з правилами сервера**, щоб уникнути непорозумінь. Для гравців вони трохи ширші :'
                                 

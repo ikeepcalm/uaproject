@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'dev.ua.ikeepcalm'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
+    implementation 'com.github.t9t.minecraft-rcon-client:minecraft-rcon-client:1.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.2'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'net.dv8tion:JDA:5.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation ('com.github.Mokulu:discord-oauth2-api:1.0.4'){
+        exclude(group: 'org.slf4j', module: 'slf4j-log4j12')
+    }
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

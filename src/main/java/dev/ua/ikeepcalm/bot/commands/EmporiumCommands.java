@@ -42,7 +42,11 @@ public class EmporiumCommands extends ListenerAdapter implements EventDispatcher
                     .build();
 
             Modal modal = Modal.create("emporium", "Емпоріум")
-                    .addActionRows(ActionRow.of(nickname), ActionRow.of(intValue), ActionRow.of(link))
+                    .addComponents(
+                            ActionRow.of(nickname),
+                            ActionRow.of(intValue),
+                            ActionRow.of(link)
+                    )
                     .build();
 
             event.replyModal(modal).queue();
